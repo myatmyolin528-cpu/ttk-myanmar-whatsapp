@@ -1,0 +1,1175 @@
+<!DOCTYPE html>
+<html lang="my">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TTK Myanmar Mart - WhatsApp Manager</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { 
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;
+            background: #f5f5f5;
+            color: #333;
+        }
+        .container { max-width: 100%; height: 100vh; display: flex; flex-direction: column; }
+        .header {
+            background: linear-gradient(135deg, #6B4423 0%, #8B5A2B 100%);
+            color: white;
+            padding: 1.5rem;
+            text-align: center;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        .header h1 { font-size: 24px; margin-bottom: 0.5rem; }
+        .header p { font-size: 13px; opacity: 0.9; }
+        .nav-tabs {
+            display: flex;
+            background: white;
+            border-bottom: 1px solid #ddd;
+            overflow-x: auto;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+        .nav-tab {
+            flex: 1;
+            padding: 1rem;
+            text-align: center;
+            cursor: pointer;
+            border: none;
+            background: white;
+            font-size: 13px;
+            font-weight: 500;
+            color: #666;
+            border-bottom: 3px solid transparent;
+            transition: all 0.3s;
+            white-space: nowrap;
+            min-width: 100px;
+        }
+        .nav-tab:hover { background: #f9f9f9; }
+        .nav-tab.active {
+            color: #6B4423;
+            border-bottom-color: #6B4423;
+            background: #fafafa;
+        }
+        .content {
+            flex: 1;
+            overflow-y: auto;
+            padding: 1.5rem;
+        }
+        .tab-pane { display: none; }
+        .tab-pane.active { display: block; }
+        .section { margin-bottom: 2rem; }
+        .section-title {
+            font-size: 15px;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            padding: 0.75rem;
+            background: #f0f0f0;
+            border-radius: 8px;
+            border-left: 3px solid #6B4423;
+        }
+        .form-group { margin-bottom: 1.5rem; }
+        .form-label { font-size: 13px; font-weight: 600; margin-bottom: 6px; display: block; }
+        .form-input, .form-textarea {
+            width: 100%;
+            padding: 10px 12px;
+            font-size: 14px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            font-family: inherit;
+            transition: all 0.2s;
+        }
+        .form-input:focus, .form-textarea:focus {
+            outline: none;
+            border-color: #6B4423;
+            box-shadow: 0 0 0 3px rgba(107, 68, 35, 0.1);
+        }
+        .form-textarea { min-height: 100px; resize: vertical; }
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+            gap: 12px;
+            margin-bottom: 1.5rem;
+        }
+        .product-card {
+            background: white;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 12px;
+            cursor: pointer;
+            text-align: center;
+            transition: all 0.2s;
+        }
+        .product-card:hover { border-color: #6B4423; box-shadow: 0 2px 8px rgba(107, 68, 35, 0.15); }
+        .product-card.selected {
+            border: 2px solid #6B4423;
+            background: rgba(107, 68, 35, 0.05);
+        }
+        .product-emoji { font-size: 36px; margin-bottom: 8px; }
+        .product-image {
+            width: 56px;
+            height: 56px;
+            object-fit: cover;
+            border-radius: 8px;
+            margin: 0 auto 8px;
+            display: block;
+            background: #f0f0f0;
+        }
+        .product-name { font-size: 12px; font-weight: 500; margin-bottom: 4px; }
+        .product-price { font-size: 13px; color: #6B4423; font-weight: 600; }
+        .product-stock { font-size: 11px; margin-top: 4px; }
+        .product-stock.low { color: #C53A30; font-weight: 600; }
+        .product-stock.ok { color: #2B6F3D; }
+        .product-stock.out { color: #C53A30; font-weight: 700; }
+        .qty-row {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            margin-top: 8px;
+        }
+        .qty-btn {
+            width: 26px;
+            height: 26px;
+            border-radius: 6px;
+            border: 1px solid #ddd;
+            background: white;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 700;
+            color: #6B4423;
+            line-height: 1;
+        }
+        .qty-btn:hover { background: #f0e8e0; }
+        .qty-value { min-width: 24px; text-align: center; font-size: 13px; font-weight: 600; }
+        .product-edit {
+            background: white;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 1rem;
+            margin-bottom: 1rem;
+        }
+        .product-edit-row {
+            display: grid;
+            grid-template-columns: 50px 60px 1fr 80px 70px auto;
+            gap: 8px;
+            align-items: center;
+        }
+        .product-edit-row input[type="text"].emoji-input { font-size: 20px; text-align: center; }
+        .product-edit-thumb {
+            width: 40px;
+            height: 40px;
+            object-fit: cover;
+            border-radius: 6px;
+            background: #f0f0f0;
+            border: 1px solid #ddd;
+        }
+        .message-preview {
+            background: white;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 1rem;
+            margin-bottom: 1rem;
+            min-height: 150px;
+            font-size: 13px;
+            line-height: 1.6;
+            white-space: pre-wrap;
+            word-break: break-word;
+            font-family: 'Courier New', monospace;
+        }
+        .button-group {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+        .btn {
+            padding: 10px 16px;
+            border-radius: 6px;
+            border: 1px solid #ddd;
+            background: white;
+            cursor: pointer;
+            font-size: 13px;
+            font-weight: 500;
+            transition: all 0.2s;
+            flex: 1;
+            min-width: 120px;
+        }
+        .btn:hover { background: #f9f9f9; }
+        .btn-primary {
+            background: #6B4423;
+            color: white;
+            border-color: #6B4423;
+        }
+        .btn-primary:hover { background: #564535; }
+        .btn-success {
+            background: #25D366;
+            color: white;
+            border-color: #25D366;
+        }
+        .btn-success:hover { background: #1fa857; }
+        .btn-danger { color: #C53A30; }
+        .btn-danger:hover { background: rgba(197, 58, 48, 0.1); }
+        .btn-small {
+            padding: 6px 12px;
+            font-size: 12px;
+            min-width: auto;
+        }
+        .template-btn {
+            padding: 8px 12px;
+            background: white;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 13px;
+            transition: all 0.2s;
+        }
+        .template-btn:hover { background: #f9f9f9; border-color: #6B4423; }
+        .template-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+            gap: 8px;
+            margin-bottom: 1.5rem;
+        }
+        .success-msg {
+            background: #e8f5e9;
+            color: #2B6F3D;
+            padding: 10px 12px;
+            border-radius: 6px;
+            margin-top: 8px;
+            font-size: 13px;
+            border-left: 3px solid #2B6F3D;
+        }
+        .guide-box {
+            background: #fff3e0;
+            border-left: 3px solid #BA7517;
+            padding: 1rem;
+            border-radius: 6px;
+            margin-bottom: 1.5rem;
+            font-size: 14px;
+            line-height: 1.6;
+        }
+        .guide-step {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 1rem;
+        }
+        .guide-step-num {
+            width: 32px;
+            height: 32px;
+            background: #BA7517;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            font-weight: 600;
+            flex-shrink: 0;
+        }
+        .cart-list { background: white; border: 1px solid #ddd; border-radius: 8px; overflow: hidden; margin-bottom: 1rem; }
+        .cart-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px 12px;
+            border-bottom: 1px solid #f0f0f0;
+        }
+        .cart-item:last-child { border-bottom: none; }
+        .cart-item-img { width: 36px; height: 36px; object-fit: cover; border-radius: 6px; flex-shrink: 0; background: #f0f0f0; }
+        .cart-item-emoji { font-size: 24px; flex-shrink: 0; }
+        .cart-item-info { flex: 1; min-width: 0; }
+        .cart-item-name { font-size: 13px; font-weight: 500; }
+        .cart-item-sub { font-size: 11px; color: #666; }
+        .cart-item-total { font-size: 13px; font-weight: 600; color: #6B4423; white-space: nowrap; }
+        .cart-item-remove { color: #C53A30; cursor: pointer; font-size: 16px; padding: 0 4px; flex-shrink: 0; }
+        .cart-empty { padding: 1.5rem; text-align: center; color: #999; font-size: 13px; }
+        .summary-box {
+            background: white;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 1rem;
+            margin-bottom: 1rem;
+        }
+        .summary-row {
+            display: flex;
+            justify-content: space-between;
+            font-size: 13px;
+            padding: 5px 0;
+            color: #555;
+        }
+        .summary-row.total {
+            border-top: 1px solid #eee;
+            margin-top: 6px;
+            padding-top: 10px;
+            font-size: 16px;
+            font-weight: 700;
+            color: #6B4423;
+        }
+        .toggle-group { display: flex; gap: 8px; margin-bottom: 1rem; }
+        .toggle-btn {
+            flex: 1;
+            padding: 10px 8px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            background: white;
+            cursor: pointer;
+            font-size: 13px;
+            font-weight: 500;
+            text-align: center;
+            transition: all 0.2s;
+        }
+        .toggle-btn.active {
+            background: #6B4423;
+            color: white;
+            border-color: #6B4423;
+        }
+        .delivery-note {
+            font-size: 12px;
+            color: #666;
+            background: #f7f3ee;
+            border-radius: 6px;
+            padding: 8px 10px;
+            margin-top: -6px;
+            margin-bottom: 1rem;
+            line-height: 1.5;
+        }
+        .lock-screen {
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.55);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            padding: 1.5rem;
+        }
+        .lock-box {
+            background: white;
+            border-radius: 12px;
+            padding: 1.5rem;
+            max-width: 320px;
+            width: 100%;
+            text-align: center;
+        }
+        .lock-box h3 { margin-bottom: 0.5rem; font-size: 16px; }
+        .lock-box p { font-size: 12px; color: #666; margin-bottom: 1rem; }
+        .lock-box input {
+            width: 100%;
+            padding: 10px 12px;
+            font-size: 16px;
+            text-align: center;
+            letter-spacing: 4px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            margin-bottom: 0.75rem;
+        }
+        .lock-error { color: #C53A30; font-size: 12px; margin-bottom: 0.5rem; min-height: 16px; }
+        .settings-locked-banner {
+            background: #fff3e0;
+            border-left: 3px solid #BA7517;
+            border-radius: 6px;
+            padding: 10px 12px;
+            font-size: 12px;
+            margin-bottom: 1rem;
+        }
+        @media (max-width: 768px) {
+            .nav-tabs { overflow-x: auto; }
+            .nav-tab { flex: 1; min-width: 70px; padding: 0.75rem 0.5rem; font-size: 12px; }
+            .content { padding: 1rem; }
+            .product-grid { grid-template-columns: repeat(auto-fill, minmax(100px, 1fr)); }
+            .product-edit-row { grid-template-columns: 50px 1fr 70px auto; }
+            .button-group { gap: 4px; }
+            .btn { min-width: 100px; padding: 8px 12px; font-size: 12px; }
+        }
+    </style>
+</head>
+<body>
+    <div id="lockScreen" class="lock-screen" style="display: none;">
+        <div class="lock-box">
+            <h3>🔒 Settings ကို သော့ခတ်ထားသည်</h3>
+            <p>Admin PIN ရိုက်ထည့်ပါ</p>
+            <input type="password" id="lockPinInput" inputmode="numeric" placeholder="• • • •" autocomplete="off">
+            <div class="lock-error" id="lockError"></div>
+            <div class="button-group">
+                <button class="btn" onclick="cancelUnlock()">နောက်သို့</button>
+                <button class="btn btn-primary" onclick="attemptUnlock()">ဖွင့်ရန်</button>
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <div class="header">
+            <h1>🛍️ TTK Myanmar Mart WhatsApp</h1>
+            <p>ကုန်စည်း - သိုလှောင်မှု - WhatsApp မက်ဆေ့ခ်မျ</p>
+        </div>
+
+        <div class="nav-tabs">
+            <button class="nav-tab active" onclick="switchTab('inventory')">📦 သိုလှောင်မှု</button>
+            <button class="nav-tab" onclick="switchTab('whatsapp')">💬 WhatsApp</button>
+            <button class="nav-tab" onclick="switchTab('settings')">⚙️ အစ ပြင်ဆင်</button>
+            <button class="nav-tab" onclick="switchTab('guide')">📖 ကျမ်း</button>
+        </div>
+
+        <div class="content">
+            <!-- INVENTORY TAB -->
+            <div id="inventory" class="tab-pane active">
+                <div class="section">
+                    <div class="section-title">📦 ကုန်စည်သိုလှောင်မှု</div>
+                    <div class="product-grid" id="inventoryGrid"></div>
+                </div>
+
+                <div class="section">
+                    <div class="section-title">📊 ကုန်စည်စာရင်း</div>
+                    <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; margin-bottom: 1.5rem;">
+                        <div style="background: white; padding: 1rem; border-radius: 8px; border: 1px solid #ddd; text-align: center;">
+                            <div style="font-size: 24px; font-weight: 600; color: #6B4423;" id="totalProducts">0</div>
+                            <div style="font-size: 12px; color: #666; margin-top: 6px;">ကုန်စည်စုစုပေါင်း</div>
+                        </div>
+                        <div style="background: white; padding: 1rem; border-radius: 8px; border: 1px solid #ddd; text-align: center;">
+                            <div style="font-size: 24px; font-weight: 600; color: #C53A30;" id="lowStockCount">0</div>
+                            <div style="font-size: 12px; color: #666; margin-top: 6px;">သိုလှောင်မှု နည်း</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="section">
+                    <div class="section-title">📝 အသုံးခြင်း မှတ်တမ်းတင်</div>
+                    <div class="form-group">
+                        <label class="form-label">ကုန်စည်ရွေးချယ်ရန်</label>
+                        <select id="productSelect" class="form-input">
+                            <option value="">ကုန်စည်ရွေးချယ်ပါ</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">အသုံးခြင်း အရေအတွက်</label>
+                        <input type="number" id="usageAmount" class="form-input" placeholder="0" min="0">
+                    </div>
+                    <button class="btn btn-primary" onclick="addUsage()">✓ မှတ်တမ်းတင်ရန်</button>
+                </div>
+            </div>
+
+            <!-- WHATSAPP TAB -->
+            <div id="whatsapp" class="tab-pane">
+                <div class="section">
+                    <div class="section-title">📱 ကုန်စည် ရွေးချယ်ရန် (Tap to add)</div>
+                    <div class="product-grid" id="whatsappProductGrid"></div>
+                </div>
+
+                <div class="section">
+                    <div class="section-title">🛒 မှာယူမှု စာရင်း</div>
+                    <div class="cart-list" id="cartList"></div>
+                </div>
+
+                <div class="section">
+                    <div class="section-title">📍 Customer Location</div>
+                    <div class="form-group">
+                        <label class="form-label">လိပ်စာ / Google Maps Link</label>
+                        <input type="text" id="customerLocation" class="form-input" placeholder="လိပ်စာ ရိုက်ထည့်ပါ (သို့) Maps link ကူးထည့်ပါ" oninput="updateOrderSummary()">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">ဧရိယာ</label>
+                        <div class="toggle-group">
+                            <button type="button" class="toggle-btn active" data-zone="abudhabi_near" onclick="setZone('abudhabi_near')">Abu Dhabi - နီး</button>
+                            <button type="button" class="toggle-btn" data-zone="abudhabi_far" onclick="setZone('abudhabi_far')">Abu Dhabi - ဝေး</button>
+                            <button type="button" class="toggle-btn" data-zone="other_uae" onclick="setZone('other_uae')">အခြား Emirates</button>
+                        </div>
+                    </div>
+                    <div class="delivery-note" id="deliveryNote"></div>
+                </div>
+
+                <div class="section">
+                    <div class="section-title">💵 စုစုပေါင်း</div>
+                    <div class="summary-box">
+                        <div class="summary-row"><span>Subtotal</span><span id="sumSubtotal">0 AED</span></div>
+                        <div class="summary-row"><span>Delivery Fee</span><span id="sumDelivery">0 AED</span></div>
+                        <div class="summary-row total"><span>Total</span><span id="sumTotal">0 AED</span></div>
+                    </div>
+                </div>
+
+                <div class="section">
+                    <div class="section-title">⚡ မြန်မြန် Template</div>
+                    <div class="template-grid">
+                        <button class="template-btn" onclick="loadTemplate('single')">🛍️ အလည်</button>
+                        <button class="template-btn" onclick="loadTemplate('inquiry')">💰 စျေးမေး</button>
+                        <button class="template-btn" onclick="loadTemplate('promo')">🎉 တည်ဆောင်း</button>
+                        <button class="template-btn" onclick="loadTemplate('contact')">📍 လိပ်စာ</button>
+                    </div>
+                </div>
+
+                <div class="section">
+                    <div class="section-title">📋 မက်ဆေ့ခ်မျ ကြိုတင်ကြည့်ရှုခြင်း</div>
+                    <div class="message-preview" id="messagePreview">ကုန်စည်ရွေးချယ်ပြီး မက်ဆေ့ခ်မျ ကြိုတင်ကြည့်ရှုခြင်း ဒီတွင် ပေါ်လျှက်ရှိမည်</div>
+                </div>
+
+                <div class="section">
+                    <div class="button-group">
+                        <button class="btn" onclick="copyMessage()">📋 ကူးယူလို့ရန်</button>
+                        <button class="btn btn-success" onclick="sendWhatsApp()">
+                            <span>📲 WhatsApp ပို့ရန်</span>
+                        </button>
+                    </div>
+                    <div id="successMsg"></div>
+                </div>
+            </div>
+
+            <!-- SETTINGS TAB -->
+            <div id="settings" class="tab-pane">
+                <div class="settings-locked-banner" id="lockStatusBanner" style="display: none;">
+                    🔒 Settings ကို PIN ဖြင့် Lock လုပ်ထားသည်။ ကိုယ်တိုင်သာ ဝင်ရောက်နိုင်ပါသည်.
+                    <button class="btn btn-small" style="margin-top: 6px; flex: none; width: 100%;" onclick="lockSettingsNow()">🔒 အခုပဲ Lock ပြန်ချရန်</button>
+                </div>
+                <div class="section">
+                    <div class="section-title">🏪 ကုန်သည်အချက်အလက်</div>
+                    <div class="form-group">
+                        <label class="form-label">ကုန်သည်အမည်</label>
+                        <input type="text" id="businessName" class="form-input">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">နေရာတည်နေရာ</label>
+                        <textarea id="businessAddress" class="form-textarea"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">ဖွင့်ခွင့်အချိန်</label>
+                        <input type="text" id="businessHours" class="form-input">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">ပို့ဆောင်ခြင်း</label>
+                        <input type="text" id="deliveryInfo" class="form-input">
+                    </div>
+                </div>
+
+                <div class="section">
+                    <div class="section-title">📦 ကုန်စည်ပြင်ဆင်ခြင်း</div>
+                    <div style="font-size: 11px; color: #888; margin-bottom: 0.75rem;">ပုံ Link ထည့်လိုပါက Image URL နေရာတွင် ကူးထည့်ပါ (မထည့်လျှင် Emoji ပြပါမည်)</div>
+                    <div id="productsEditContainer"></div>
+                    <button class="btn btn-primary" onclick="addNewProduct()">+ ကုန်စည်ထည့်ရန်</button>
+                </div>
+
+                <div class="section">
+                    <div class="section-title">🚚 Delivery Fee သတ်မှတ်ချက်</div>
+                    <div class="form-group">
+                        <label class="form-label">Abu Dhabi - နီးသောနေရာ - Free Delivery အတွက် အနည်းဆုံး စျေးနှုန်း (AED)</label>
+                        <input type="number" id="freeThresholdNear" class="form-input" min="0">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Abu Dhabi - နီးသောနေရာ - Delivery Fee (AED)</label>
+                        <input type="number" id="feeNear" class="form-input" min="0">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Abu Dhabi - ဝေးသောနေရာ - Delivery Fee (AED) (Flat rate)</label>
+                        <input type="number" id="feeFar" class="form-input" min="0">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">အခြား Emirates - Free Delivery အတွက် အနည်းဆုံး စျေးနှုန်း (AED)</label>
+                        <input type="number" id="freeThresholdOther" class="form-input" min="0">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">အခြား Emirates - Delivery Fee (AED)</label>
+                        <input type="number" id="feeOther" class="form-input" min="0">
+                    </div>
+                </div>
+
+                <div class="section">
+                    <div class="section-title">🔒 Admin Lock</div>
+                    <div class="form-group">
+                        <label class="form-label">Settings PIN (ဒီ PIN မသိလျှင် Settings tab ဖွင့်လို့ မရပါ)</label>
+                        <input type="text" id="adminPin" class="form-input" placeholder="ဥပမာ - 1234" maxlength="12">
+                    </div>
+                </div>
+
+                <div class="section">
+                    <div class="section-title">📝 မက်ဆေ့ခ်မျ Template များ</div>
+                    <div class="form-group">
+                        <label class="form-label">အလည် Template</label>
+                        <textarea id="tmpl-single" class="form-textarea"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">စျေးမေး Template</label>
+                        <textarea id="tmpl-inquiry" class="form-textarea"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">တည်ဆောင်း Template</label>
+                        <textarea id="tmpl-promo" class="form-textarea"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">လိပ်စာ Template</label>
+                        <textarea id="tmpl-contact" class="form-textarea"></textarea>
+                    </div>
+                </div>
+
+                <div class="section">
+                    <div class="button-group">
+                        <button class="btn btn-primary" onclick="saveAllSettings()">💾 အားလုံး သိမ်းဆည်းရန်</button>
+                        <button class="btn btn-danger" onclick="resetAllData()">↺ ပြန်သတ်မှတ်ရန်</button>
+                    </div>
+                    <div id="settingsMsg"></div>
+                </div>
+            </div>
+
+            <!-- GUIDE TAB -->
+            <div id="guide" class="tab-pane">
+                <div class="section">
+                    <div class="section-title">📖 အသုံးပြုရန် နည်းလမ်း</div>
+                    <div class="guide-box">
+                        <div class="guide-step">
+                            <div class="guide-step-num">1</div>
+                            <div>
+                                <strong>ပထမ - အစ ပြင်ဆင်ခြင်း</strong><br>
+                                ⚙️ Settings Tab မှ ကုန်သည်အချက်အလက် နှင့် ကုန်စည်များ ပြင်ဆင်ပါ
+                            </div>
+                        </div>
+                        <div class="guide-step">
+                            <div class="guide-step-num">2</div>
+                            <div>
+                                <strong>ဒုတိယ - သိုလှောင်မှု ခြင်း</strong><br>
+                                📦 Inventory Tab မှ ရက်စဉ် အသုံးခြင်း မှတ်တမ်းတင်ပါ
+                            </div>
+                        </div>
+                        <div class="guide-step">
+                            <div class="guide-step-num">3</div>
+                            <div>
+                                <strong>တတိယ - WhatsApp ပို့ခြင်း</strong><br>
+                                💬 WhatsApp Tab မှ ကုန်စည်ရွေးချယ်ပြီး မက်ဆေ့ခ်မျ ကူးယူ WhatsApp မှာ ပို့ပါ
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="section">
+                    <div class="section-title">💡 အကြံဉာဏ်များ</div>
+                    <div class="guide-box">
+                        <strong>✓ ကုန်စည်အီမိုဂျီ ကောင်းကောင်း ရွေးချယ်ပါ</strong> - Customer ဖက်ကြည့်မှု ကောင်း<br>
+                        <strong>✓ မက်ဆေ့ခ်မျများ အများစုလို ပြင်ဆင်ပါ</strong> - ကုန်သည်ဖက်ကုံးမှုအလျောက်<br>
+                        <strong>✓ အသုံးခြင်း မှတ်တမ်းတင်ပါ</strong> - ကုန်စည်လည်ပတ် သိမ်းသိမ်း ကြည့်နိုင်<br>
+                        <strong>✓ အတည်းအနေ အဆင့်အတန်း ပြင်ဆင်ပါ</strong> - ကုန်သည်အချက်အလက် အဆင့်အတန်း
+                    </div>
+                </div>
+
+                <div class="section">
+                    <div class="section-title">🔗 GitHub Pages မှာ Deploy လုပ်ရန်</div>
+                    <div class="guide-box">
+                        <div style="font-size: 13px; line-height: 1.8;">
+                            <strong>1. GitHub မှ Repository ဖန်ဆင်းရန်</strong><br>
+                            သင့်ရဲ့ GitHub repository မှ "index.html" အဖြစ် ဒီ file ကို upload လုပ်ပါ<br><br>
+                            
+                            <strong>2. GitHub Pages activate လုပ်ရန်</strong><br>
+                            Settings → Pages → Deploy from branch (main) ရွေးချယ်ပါ<br><br>
+                            
+                            <strong>3. URL ကူးယူ ရန်</strong><br>
+                            https://yourusername.github.io/repository-name/<br><br>
+                            
+                            <strong>4. WhatsApp မှာ အသုံးပြုရန်</strong><br>
+                            Customer မေးတိုင်းအတွက် URL ကို အထက်မှ copy လုပ်ပြီး WhatsApp မှာ ပို့ပါ
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Data Management
+        const defaultProducts = [
+            { id: 1, name_my: 'နံပါတ်သုံး', price: 12, emoji: '🌿', image: '', stock: 45, usage: [10, 12, 8, 15, 11, 9] },
+            { id: 2, name_my: 'ငံ့ဆီ', price: 18, emoji: '🌶️', image: '', stock: 8, usage: [5, 6, 7, 4, 5, 8] },
+            { id: 3, name_my: 'လက်သီးအစာ', price: 25, emoji: '🍵', image: '', stock: 32, usage: [6, 5, 6, 7, 6, 8] },
+            { id: 4, name_my: 'ခြင်းအရည်', price: 22, emoji: '🦐', image: '', stock: 15, usage: [3, 4, 3, 5, 4, 3] },
+            { id: 5, name_my: 'ဆန်ခါတင်း', price: 8, emoji: '🍜', image: '', stock: 120, usage: [20, 18, 22, 25, 19, 21] }
+        ];
+
+        const defaultTemplates = {
+            single: '{emoji} *{name}*\n💰 Price: {price} AED\n\nAre you interested? How many units?',
+            inquiry: 'Hi! Do you have {name} in stock?\n💰 Price: {price} AED\n\nWhen can you deliver?',
+            promo: '🎉 Special offer on {name}!\n💰 Now: {price} AED\n\nLimited stocks only! Order now 📲',
+            contact: '{business}\n📍 {address}\n🕐 {hours}\n🚗 {delivery}'
+        };
+
+        const defaultBusiness = {
+            name: 'TTK Myanmar Mart UAE',
+            address: 'Hamdan Street, Abu Dhabi, UAE\n+971 50 123 4567',
+            hours: '10:00 AM - 10:00 PM',
+            delivery: 'Free delivery available in Abu Dhabi'
+        };
+
+        const defaultDelivery = {
+            freeThresholdNear: 100,
+            feeNear: 15,
+            feeFar: 35,
+            freeThresholdOther: 200,
+            feeOther: 35
+        };
+
+        let products = JSON.parse(localStorage.getItem('products')) || defaultProducts;
+        let templates = JSON.parse(localStorage.getItem('templates')) || defaultTemplates;
+        let businessInfo = JSON.parse(localStorage.getItem('businessInfo')) || defaultBusiness;
+        let deliverySettings = JSON.parse(localStorage.getItem('deliverySettings')) || defaultDelivery;
+        let adminPin = localStorage.getItem('adminPin') || '';
+        let selectedProduct = null;
+        let cart = {}; // { productIndex: qty }
+        let currentZone = 'abudhabi_near';
+        let settingsUnlocked = false;
+
+        // Initialize
+        function init() {
+            renderInventoryGrid();
+            renderWhatsappGrid();
+            renderProductSelect();
+            renderCart();
+            loadSettings();
+            updateStats();
+            updateOrderSummary();
+        }
+
+        function productVisualHTML(p, size) {
+            size = size || 36;
+            if (p.image) {
+                return `<img class="product-image" src="${escapeAttr(p.image)}" style="width:${size}px;height:${size}px;" onerror="this.outerHTML='<div class=&quot;product-emoji&quot; style=&quot;font-size:${size * 0.7}px;&quot;>${p.emoji || '📦'}</div>'">`;
+            }
+            return `<div class="product-emoji" style="font-size: ${size * 0.7}px;">${p.emoji || '📦'}</div>`;
+        }
+
+        function escapeAttr(str) {
+            return String(str).replace(/"/g, '&quot;');
+        }
+
+        function switchTab(tabName) {
+            if (tabName === 'settings' && !settingsUnlocked && adminPin) {
+                showLockScreen(() => switchTab('settings'));
+                return;
+            }
+            document.querySelectorAll('.tab-pane').forEach(el => el.classList.remove('active'));
+            document.querySelectorAll('.nav-tab').forEach(el => el.classList.remove('active'));
+            document.getElementById(tabName).classList.add('active');
+            event.target.classList.add('active');
+        }
+
+        let pendingUnlockCallback = null;
+
+        function showLockScreen(callback) {
+            pendingUnlockCallback = callback;
+            document.getElementById('lockError').textContent = '';
+            document.getElementById('lockPinInput').value = '';
+            document.getElementById('lockScreen').style.display = 'flex';
+            setTimeout(() => document.getElementById('lockPinInput').focus(), 50);
+        }
+
+        function cancelUnlock() {
+            document.getElementById('lockScreen').style.display = 'none';
+            pendingUnlockCallback = null;
+        }
+
+        function attemptUnlock() {
+            const val = document.getElementById('lockPinInput').value;
+            if (val === adminPin) {
+                settingsUnlocked = true;
+                document.getElementById('lockScreen').style.display = 'none';
+                const cb = pendingUnlockCallback;
+                pendingUnlockCallback = null;
+                if (cb) cb();
+            } else {
+                document.getElementById('lockError').textContent = 'PIN မှားနေသည်။ ပြန်စမ်းကြည့်ပါ';
+                document.getElementById('lockPinInput').value = '';
+                document.getElementById('lockPinInput').focus();
+            }
+        }
+
+        function renderInventoryGrid() {
+            const grid = document.getElementById('inventoryGrid');
+            grid.innerHTML = products.map((p, idx) => {
+                const cap = p.stock + 30;
+                const ratio = cap > 0 ? p.stock / cap : 0;
+                let stockClass = 'ok', stockLabel = `Stock: ${p.stock}`;
+                if (p.stock <= 0) { stockClass = 'out'; stockLabel = 'Out of Stock'; }
+                else if (ratio < 0.3) { stockClass = 'low'; stockLabel = `Stock: ${p.stock} (နည်းနေပြီ)`; }
+                return `
+                <div class="product-card">
+                    ${productVisualHTML(p, 56)}
+                    <div class="product-name">${p.name_my}</div>
+                    <div class="product-stock ${stockClass}">${stockLabel}</div>
+                    <div class="product-price">${p.price} AED</div>
+                </div>
+            `;
+            }).join('');
+        }
+
+        function renderWhatsappGrid() {
+            const grid = document.getElementById('whatsappProductGrid');
+            grid.innerHTML = products.map((p, idx) => {
+                const qty = cart[idx] || 0;
+                const isOut = p.stock <= 0;
+                let stockClass = 'ok', stockLabel = `Stock: ${p.stock}`;
+                if (isOut) { stockClass = 'out'; stockLabel = 'Out of Stock'; }
+                else if (p.stock < (p.stock + 30) * 0.3) { stockClass = 'low'; stockLabel = `Stock: ${p.stock}`; }
+                return `
+                <div class="product-card ${qty > 0 ? 'selected' : ''}">
+                    ${productVisualHTML(p, 48)}
+                    <div class="product-name">${p.name_my}</div>
+                    <div class="product-price">${p.price} AED</div>
+                    <div class="product-stock ${stockClass}">${stockLabel}</div>
+                    <div class="qty-row">
+                        <button type="button" class="qty-btn" onclick="changeCartQty(${idx}, -1)">−</button>
+                        <span class="qty-value">${qty}</span>
+                        <button type="button" class="qty-btn" onclick="changeCartQty(${idx}, 1)" ${isOut ? 'disabled style="opacity:0.4;cursor:not-allowed;"' : ''}>+</button>
+                    </div>
+                </div>
+            `;
+            }).join('');
+        }
+
+        function changeCartQty(idx, delta) {
+            const p = products[idx];
+            const current = cart[idx] || 0;
+            let next = current + delta;
+            if (next < 0) next = 0;
+            if (p.stock > 0 && next > p.stock) next = p.stock;
+            if (p.stock <= 0) next = 0;
+            if (next === 0) delete cart[idx];
+            else cart[idx] = next;
+
+            if (next > 0) selectedProduct = idx;
+
+            renderWhatsappGrid();
+            renderCart();
+            updateOrderSummary();
+            generateMessage();
+        }
+
+        function renderCart() {
+            const list = document.getElementById('cartList');
+            const entries = Object.keys(cart).filter(idx => cart[idx] > 0);
+            if (entries.length === 0) {
+                list.innerHTML = '<div class="cart-empty">ကုန်စည် မရွေးချယ်ရသေးပါ</div>';
+                return;
+            }
+            list.innerHTML = entries.map(idx => {
+                const p = products[idx];
+                const qty = cart[idx];
+                const lineTotal = (p.price * qty).toFixed(2).replace(/\.00$/, '');
+                const visual = p.image
+                    ? `<img class="cart-item-img" src="${escapeAttr(p.image)}" onerror="this.outerHTML='<div class=&quot;cart-item-emoji&quot;>${p.emoji || '📦'}</div>'">`
+                    : `<div class="cart-item-emoji">${p.emoji || '📦'}</div>`;
+                return `
+                <div class="cart-item">
+                    ${visual}
+                    <div class="cart-item-info">
+                        <div class="cart-item-name">${p.name_my}</div>
+                        <div class="cart-item-sub">${qty} × ${p.price} AED</div>
+                    </div>
+                    <div class="cart-item-total">${lineTotal} AED</div>
+                    <div class="cart-item-remove" onclick="changeCartQty(${idx}, -${qty})">✕</div>
+                </div>
+            `;
+            }).join('');
+        }
+
+        function getCartSubtotal() {
+            return Object.keys(cart).reduce((sum, idx) => sum + (products[idx].price * cart[idx]), 0);
+        }
+
+        function setZone(zone) {
+            currentZone = zone;
+            document.querySelectorAll('.toggle-btn').forEach(btn => {
+                btn.classList.toggle('active', btn.dataset.zone === zone);
+            });
+            updateOrderSummary();
+        }
+
+        function computeDelivery(subtotal, zone) {
+            const d = deliverySettings;
+            if (zone === 'abudhabi_near') {
+                return subtotal >= d.freeThresholdNear ? 0 : d.feeNear;
+            } else if (zone === 'abudhabi_far') {
+                return d.feeFar;
+            } else {
+                return subtotal >= d.freeThresholdOther ? 0 : d.feeOther;
+            }
+        }
+
+        function zoneLabel(zone) {
+            if (zone === 'abudhabi_near') return 'Abu Dhabi - နီးသောနေရာ';
+            if (zone === 'abudhabi_far') return 'Abu Dhabi - ဝေးသောနေရာ';
+            return 'အခြား Emirates';
+        }
+
+        function updateOrderSummary() {
+            const subtotal = getCartSubtotal();
+            const fee = computeDelivery(subtotal, currentZone);
+            const total = subtotal + fee;
+
+            document.getElementById('sumSubtotal').textContent = `${fmtMoney(subtotal)} AED`;
+            document.getElementById('sumDelivery').textContent = fee === 0 ? 'Free' : `${fmtMoney(fee)} AED`;
+            document.getElementById('sumTotal').textContent = `${fmtMoney(total)} AED`;
+
+            const d = deliverySettings;
+            let note = '';
+            if (currentZone === 'abudhabi_near') {
+                note = `Abu Dhabi နီးသောနေရာ - ${d.freeThresholdNear} AED အထက်ဆိုလျှင် Delivery Free၊ မဟုတ်လျှင် ${d.feeNear} AED`;
+            } else if (currentZone === 'abudhabi_far') {
+                note = `Abu Dhabi ဝေးသောနေရာ - Delivery Fee ${d.feeFar} AED (Flat rate)`;
+            } else {
+                note = `UAE မြို့အတွင်း - ${d.freeThresholdOther} AED အထက်ဆိုလျှင် Delivery Free၊ မဟုတ်လျှင် ${d.feeOther} AED`;
+            }
+            document.getElementById('deliveryNote').textContent = note;
+
+            generateMessage();
+        }
+
+        function fmtMoney(n) {
+            return (Math.round(n * 100) / 100).toString();
+        }
+
+        function renderProductSelect() {
+            const select = document.getElementById('productSelect');
+            select.innerHTML = '<option value="">ကုန်စည်ရွေးချယ်ပါ</option>' +
+                products.map((p, idx) => `<option value="${idx}">${p.name_my}</option>`).join('');
+        }
+
+        function addUsage() {
+            const idx = parseInt(document.getElementById('productSelect').value);
+            const amount = parseInt(document.getElementById('usageAmount').value);
+            
+            if (isNaN(idx) || isNaN(amount) || amount <= 0) {
+                alert('ကုန်စည် နှင့် အရေအတွက် ရွေးချယ်ပါ');
+                return;
+            }
+
+            products[idx].stock = Math.max(0, products[idx].stock - amount);
+            products[idx].usage.shift();
+            products[idx].usage.push(amount);
+            
+            saveAllSettings();
+            renderInventoryGrid();
+            updateStats();
+            
+            document.getElementById('productSelect').value = '';
+            document.getElementById('usageAmount').value = '';
+        }
+
+        function updateStats() {
+            const total = products.length;
+            const lowStock = products.filter(p => p.stock < (p.stock + 30) * 0.3).length;
+            document.getElementById('totalProducts').textContent = total;
+            document.getElementById('lowStockCount').textContent = lowStock;
+        }
+
+        function loadTemplate(type) {
+            const entries = Object.keys(cart).filter(idx => cart[idx] > 0);
+            let idx = selectedProduct;
+            if (idx === null || !cart[idx]) {
+                idx = entries.length > 0 ? parseInt(entries[entries.length - 1]) : null;
+            }
+            if (idx === null) {
+                alert('ကုန်စည်ရွေးချယ်ပါ');
+                return;
+            }
+
+            const p = products[idx];
+            let msg = templates[type] || '';
+            
+            msg = msg.replace('{emoji}', p.emoji)
+                     .replace('{name}', p.name_my)
+                     .replace('{price}', p.price)
+                     .replace('{business}', businessInfo.name)
+                     .replace('{address}', businessInfo.address)
+                     .replace('{hours}', businessInfo.hours)
+                     .replace('{delivery}', businessInfo.delivery);
+            
+            document.getElementById('messagePreview').textContent = msg;
+        }
+
+        function generateMessage() {
+            const entries = Object.keys(cart).filter(idx => cart[idx] > 0);
+
+            if (entries.length === 0) {
+                document.getElementById('messagePreview').textContent = 'ကုန်စည်ရွေးချယ်ပါ';
+                return;
+            }
+
+            const subtotal = getCartSubtotal();
+            const fee = computeDelivery(subtotal, currentZone);
+            const total = subtotal + fee;
+            const location = document.getElementById('customerLocation') ? document.getElementById('customerLocation').value.trim() : '';
+
+            let msg = `🛍️ *Order - ${businessInfo.name}*\n\n`;
+            entries.forEach(idx => {
+                const p = products[idx];
+                const qty = cart[idx];
+                const lineTotal = fmtMoney(p.price * qty);
+                msg += `${p.emoji || '📦'} ${p.name_my} × ${qty} = ${lineTotal} AED\n`;
+            });
+            msg += `\nSubtotal: ${fmtMoney(subtotal)} AED\n`;
+            msg += `Delivery (${zoneLabel(currentZone)}): ${fee === 0 ? 'Free' : fmtMoney(fee) + ' AED'}\n`;
+            msg += `*Total: ${fmtMoney(total)} AED*\n`;
+            if (location) {
+                msg += `\n📍 Location: ${location}\n`;
+            }
+            msg += `\nInterested? Please confirm order 📲`;
+
+            document.getElementById('messagePreview').textContent = msg;
+        }
+
+        function copyMessage() {
+            const msg = document.getElementById('messagePreview').textContent;
+            navigator.clipboard.writeText(msg).then(() => {
+                const el = document.getElementById('successMsg');
+                el.innerHTML = '<div class="success-msg">✓ Copied to clipboard</div>';
+                setTimeout(() => el.innerHTML = '', 2000);
+            });
+        }
+
+        function sendWhatsApp() {
+            const msg = document.getElementById('messagePreview').textContent;
+            const encoded = encodeURIComponent(msg);
+            window.open(`https://wa.me/?text=${encoded}`, '_blank');
+        }
+
+        function lockSettingsNow() {
+            settingsUnlocked = false;
+            switchTabProgrammatic('inventory');
+        }
+
+        function switchTabProgrammatic(tabName) {
+            document.querySelectorAll('.tab-pane').forEach(el => el.classList.remove('active'));
+            document.querySelectorAll('.nav-tab').forEach(el => el.classList.remove('active'));
+            document.getElementById(tabName).classList.add('active');
+            const tabBtns = document.querySelectorAll('.nav-tab');
+            const idx = ['inventory', 'whatsapp', 'settings', 'guide'].indexOf(tabName);
+            if (tabBtns[idx]) tabBtns[idx].classList.add('active');
+        }
+
+        function loadSettings() {
+            document.getElementById('businessName').value = businessInfo.name;
+            document.getElementById('businessAddress').value = businessInfo.address;
+            document.getElementById('businessHours').value = businessInfo.hours;
+            document.getElementById('deliveryInfo').value = businessInfo.delivery;
+            
+            document.getElementById('tmpl-single').value = templates.single;
+            document.getElementById('tmpl-inquiry').value = templates.inquiry;
+            document.getElementById('tmpl-promo').value = templates.promo;
+            document.getElementById('tmpl-contact').value = templates.contact;
+
+            document.getElementById('freeThresholdNear').value = deliverySettings.freeThresholdNear;
+            document.getElementById('feeNear').value = deliverySettings.feeNear;
+            document.getElementById('feeFar').value = deliverySettings.feeFar;
+            document.getElementById('freeThresholdOther').value = deliverySettings.freeThresholdOther;
+            document.getElementById('feeOther').value = deliverySettings.feeOther;
+
+            document.getElementById('adminPin').value = adminPin;
+            document.getElementById('lockStatusBanner').style.display = adminPin ? 'block' : 'none';
+            
+            renderProductsEditor();
+        }
+
+        function renderProductsEditor() {
+            const container = document.getElementById('productsEditContainer');
+            container.innerHTML = products.map((p, idx) => `
+                <div class="product-edit">
+                    <div class="product-edit-row">
+                        <input type="text" class="emoji-input" value="${p.emoji || ''}" onchange="updateProduct(${idx}, 'emoji', this.value)" placeholder="📦">
+                        ${p.image ? `<img class="product-edit-thumb" src="${escapeAttr(p.image)}" onerror="this.style.display='none'">` : `<div class="product-edit-thumb"></div>`}
+                        <input type="text" placeholder="အမည်" value="${p.name_my}" onchange="updateProduct(${idx}, 'name_my', this.value)">
+                        <input type="number" placeholder="စျေးနှုန်း" value="${p.price}" onchange="updateProduct(${idx}, 'price', this.value)">
+                        <input type="number" placeholder="Stock" value="${p.stock}" onchange="updateProduct(${idx}, 'stock', this.value)">
+                        <button class="btn btn-danger btn-small" onclick="deleteProduct(${idx})">🗑️</button>
+                    </div>
+                    <div style="margin-top: 8px;">
+                        <input type="text" placeholder="Image URL (optional)" value="${p.image || ''}" onchange="updateProduct(${idx}, 'image', this.value)" style="width: 100%; padding: 6px 8px; font-size: 12px; border: 1px solid #ddd; border-radius: 6px;">
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function updateProduct(idx, field, value) {
+            if (field === 'price' || field === 'stock') products[idx][field] = parseFloat(value) || 0;
+            else products[idx][field] = value;
+            if (field === 'image' || field === 'emoji') renderProductsEditor();
+        }
+
+        function deleteProduct(idx) {
+            if (confirm('ဖျက်မလား?')) {
+                products.splice(idx, 1);
+                delete cart[idx];
+                // re-key cart for indices shifted after the deleted one
+                const newCart = {};
+                Object.keys(cart).forEach(k => {
+                    const n = parseInt(k);
+                    newCart[n > idx ? n - 1 : n] = cart[k];
+                });
+                cart = newCart;
+                renderProductsEditor();
+                renderInventoryGrid();
+                renderWhatsappGrid();
+                renderProductSelect();
+                renderCart();
+                updateOrderSummary();
+            }
+        }
+
+        function addNewProduct() {
+            products.push({ 
+                id: Date.now(), 
+                name_my: 'ကုန်စည်အသစ်', 
+                price: 0, 
+                emoji: '📦', 
+                image: '',
+                stock: 0,
+                usage: [0, 0, 0, 0, 0, 0]
+            });
+            renderProductsEditor();
+            renderInventoryGrid();
+            renderWhatsappGrid();
+            renderProductSelect();
+        }
+
+        function saveAllSettings() {
+            templates.single = document.getElementById('tmpl-single').value;
+            templates.inquiry = document.getElementById('tmpl-inquiry').value;
+            templates.promo = document.getElementById('tmpl-promo').value;
+            templates.contact = document.getElementById('tmpl-contact').value;
+            
+            businessInfo.name = document.getElementById('businessName').value;
+            businessInfo.address = document.getElementById('businessAddress').value;
+            businessInfo.hours = document.getElementById('businessHours').value;
+            businessInfo.delivery = document.getElementById('deliveryInfo').value;
+
+            deliverySettings.freeThresholdNear = parseFloat(document.getElementById('freeThresholdNear').value) || 0;
+            deliverySettings.feeNear = parseFloat(document.getElementById('feeNear').value) || 0;
+            deliverySettings.feeFar = parseFloat(document.getElementById('feeFar').value) || 0;
+            deliverySettings.freeThresholdOther = parseFloat(document.getElementById('freeThresholdOther').value) || 0;
+            deliverySettings.feeOther = parseFloat(document.getElementById('feeOther').value) || 0;
+
+            adminPin = document.getElementById('adminPin').value.trim();
+
+            localStorage.setItem('products', JSON.stringify(products));
+            localStorage.setItem('templates', JSON.stringify(templates));
+            localStorage.setItem('businessInfo', JSON.stringify(businessInfo));
+            localStorage.setItem('deliverySettings', JSON.stringify(deliverySettings));
+            localStorage.setItem('adminPin', adminPin);
+
+            renderInventoryGrid();
+            renderWhatsappGrid();
+            renderCart();
+            updateOrderSummary();
+            document.getElementById('lockStatusBanner').style.display = adminPin ? 'block' : 'none';
+
+            const el = document.getElementById('settingsMsg');
+            el.innerHTML = '<div class="success-msg">✓ အားလုံး သိမ်းဆည်းပြီးပါပြီ</div>';
+            setTimeout(() => el.innerHTML = '', 2000);
+        }
+
+        function resetAllData() {
+            if (confirm('အားလုံးကို မူလအတိုင်း ပြန်သတ်မှတ်ရန် သေချာပါသလား?')) {
+                localStorage.clear();
+                location.reload();
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const pinInput = document.getElementById('lockPinInput');
+            if (pinInput) {
+                pinInput.addEventListener('keydown', (e) => {
+                    if (e.key === 'Enter') attemptUnlock();
+                });
+            }
+        });
+
+        init();
+    </script>
+</body>
+</html>
