@@ -1,0 +1,1709 @@
+<!DOCTYPE html>
+<html lang="my">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TTK Myanmar Mart-UAE</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Myanmar:wght@300;400;500;600;700&family=Playfair+Display:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --gold: #C9A84C;
+  --dark: #1a1a1a;
+  --cream: #FAF7F2;
+  --red: #C0392B;
+  --green: #27AE60;
+  --text: #2c2c2c;
+  --muted: #888;
+  --border: #e0d9ce;
+  --white: #ffffff;
+  --shadow: 0 4px 24px rgba(0,0,0,0.08);
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+body { font-family: 'Noto Sans Myanmar', sans-serif; background: var(--cream); color: var(--text); }
+
+/* NAV */
+nav {
+  background: var(--dark);
+  padding: 0 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 64px;
+  position: sticky; top:0; z-index:100;
+  box-shadow: 0 2px 16px rgba(0,0,0,0.3);
+}
+.nav-logo { display:flex; align-items:center; gap:10px; }
+.nav-logo img { width:36px; height:36px; border-radius:50%; object-fit:cover; }
+.nav-logo span { color: var(--gold); font-size:1.1rem; font-weight:600; font-family:'Playfair Display',serif; }
+.nav-links { display:flex; gap:6px; }
+.nav-links a {
+  color: #ccc; text-decoration:none; padding:8px 14px; border-radius:6px;
+  font-size:0.85rem; transition:all 0.2s;
+}
+.nav-links a:hover { background:rgba(201,168,76,0.15); color:var(--gold); }
+.nav-cart {
+  background: var(--gold); color: var(--dark); border:none; padding:8px 16px;
+  border-radius:20px; cursor:pointer; font-weight:600; font-size:0.85rem;
+  display:flex; align-items:center; gap:6px;
+}
+.cart-badge {
+  background: var(--red); color:#fff; border-radius:50%; width:18px; height:18px;
+  display:flex; align-items:center; justify-content:center; font-size:0.7rem;
+}
+
+/* HERO */
+.hero {
+  background: linear-gradient(135deg, var(--dark) 0%, #2c1810 50%, #1a0f08 100%);
+  color: #fff; padding: 80px 24px; text-align:center; position:relative; overflow:hidden;
+}
+.hero::before {
+  content:''; position:absolute; inset:0;
+  background: radial-gradient(ellipse at 30% 50%, rgba(201,168,76,0.15) 0%, transparent 60%),
+              radial-gradient(ellipse at 70% 50%, rgba(192,57,43,0.1) 0%, transparent 60%);
+}
+.hero-content { position:relative; z-index:1; }
+.hero-logo { width:90px; height:90px; border-radius:50%; object-fit:cover; border:3px solid var(--gold); margin:0 auto 20px; display:block; }
+.hero h1 { font-family:'Playfair Display',serif; font-size:2.2rem; color:var(--gold); margin-bottom:12px; }
+.hero p { font-size:0.95rem; color:#ccc; max-width:500px; margin:0 auto 24px; line-height:1.7; }
+.hero-btns { display:flex; gap:12px; justify-content:center; flex-wrap:wrap; }
+.btn-primary { background:var(--gold); color:var(--dark); padding:12px 24px; border-radius:25px; text-decoration:none; font-weight:700; transition:all 0.2s; }
+.btn-primary:hover { background:#e0b85a; transform:translateY(-1px); }
+.btn-outline { border:2px solid var(--gold); color:var(--gold); padding:12px 24px; border-radius:25px; text-decoration:none; font-weight:600; transition:all 0.2s; }
+.btn-outline:hover { background:rgba(201,168,76,0.15); }
+
+/* SECTIONS */
+section { padding:60px 24px; max-width:900px; margin:0 auto; }
+.section-title {
+  font-family:'Playfair Display',serif; font-size:1.8rem; color:var(--dark);
+  text-align:center; margin-bottom:8px;
+}
+.section-sub { text-align:center; color:var(--muted); margin-bottom:40px; font-size:0.9rem; }
+.divider { width:60px; height:3px; background:var(--gold); margin:12px auto 40px; border-radius:2px; }
+
+/* MENU */
+.menu-cats { display:flex; gap:8px; flex-wrap:wrap; justify-content:center; margin-bottom:32px; }
+.cat-btn {
+  padding:8px 18px; border-radius:20px; border:2px solid var(--border);
+  background:#fff; cursor:pointer; font-size:0.85rem; transition:all 0.2s;
+  font-family: 'Noto Sans Myanmar', sans-serif;
+}
+.cat-btn.active, .cat-btn:hover { background:var(--gold); border-color:var(--gold); color:var(--dark); font-weight:600; }
+.menu-grid { display:grid; grid-template-columns:repeat(auto-fill, minmax(240px,1fr)); gap:20px; }
+.menu-card {
+  background:#fff; border-radius:16px; overflow:hidden; box-shadow:var(--shadow);
+  transition:transform 0.2s, box-shadow 0.2s;
+}
+.menu-card:hover { transform:translateY(-4px); box-shadow:0 8px 32px rgba(0,0,0,0.12); }
+.menu-card img { width:100%; height:160px; object-fit:cover; }
+.menu-card-body { padding:16px; }
+.menu-card-body h3 { font-size:1rem; margin-bottom:4px; }
+.menu-card-body p { font-size:0.8rem; color:var(--muted); margin-bottom:12px; line-height:1.5; }
+.menu-card-footer { display:flex; justify-content:space-between; align-items:center; }
+.price { font-weight:700; color:var(--gold); font-size:1rem; }
+.add-btn {
+  background:var(--dark); color:#fff; border:none; width:32px; height:32px;
+  border-radius:50%; cursor:pointer; font-size:1.2rem; transition:all 0.2s;
+  display:flex; align-items:center; justify-content:center;
+}
+.add-btn:hover { background:var(--gold); color:var(--dark); }
+
+/* GALLERY */
+.gallery-grid { display:grid; grid-template-columns:repeat(auto-fill, minmax(200px,1fr)); gap:16px; }
+.gallery-img { width:100%; height:200px; object-fit:cover; border-radius:12px; cursor:pointer; transition:transform 0.2s; }
+.gallery-img:hover { transform:scale(1.02); }
+
+/* ABOUT */
+.about-box { background:#fff; border-radius:20px; padding:40px; box-shadow:var(--shadow); }
+.about-box p { line-height:1.9; font-size:0.95rem; }
+
+/* FIND US */
+.findus-grid { display:grid; grid-template-columns:1fr 1fr; gap:24px; }
+@media(max-width:600px){ .findus-grid{grid-template-columns:1fr;} }
+.info-card { background:#fff; border-radius:16px; padding:24px; box-shadow:var(--shadow); }
+.info-card h3 { font-size:0.75rem; text-transform:uppercase; letter-spacing:1px; color:var(--muted); margin-bottom:12px; }
+.info-card p { font-size:0.95rem; line-height:1.7; }
+.info-card a { color:var(--gold); text-decoration:none; font-weight:600; }
+.map-embed { grid-column:1/-1; border-radius:16px; overflow:hidden; height:280px; }
+.map-embed iframe { width:100%; height:100%; border:0; }
+
+/* PAYMENT */
+.payment-cards { display:grid; grid-template-columns:1fr 1fr; gap:20px; }
+@media(max-width:600px){ .payment-cards{grid-template-columns:1fr;} }
+.pay-card { background:#fff; border-radius:16px; padding:24px; box-shadow:var(--shadow); border-top:4px solid var(--gold); }
+.pay-card h3 { font-size:1rem; margin-bottom:16px; display:flex; align-items:center; gap:8px; }
+.pay-row { display:flex; justify-content:space-between; margin-bottom:8px; font-size:0.85rem; }
+.pay-label { color:var(--muted); }
+.pay-value { font-weight:600; font-size:0.9rem; }
+.copy-btn {
+  background:var(--cream); border:1px solid var(--border); padding:4px 10px;
+  border-radius:6px; cursor:pointer; font-size:0.75rem; transition:all 0.2s;
+}
+.copy-btn:hover { background:var(--gold); border-color:var(--gold); }
+
+/* CART SIDEBAR */
+.cart-overlay { display:none; position:fixed; inset:0; background:rgba(0,0,0,0.5); z-index:200; }
+.cart-overlay.open { display:block; }
+.cart-sidebar {
+  position:fixed; right:0; top:0; bottom:0; width:360px; background:#fff;
+  z-index:201; padding:24px; overflow-y:auto; transform:translateX(100%);
+  transition:transform 0.3s; box-shadow:-4px 0 24px rgba(0,0,0,0.15);
+}
+.cart-sidebar.open { transform:translateX(0); }
+.cart-header { display:flex; justify-content:space-between; align-items:center; margin-bottom:24px; }
+.cart-header h2 { font-size:1.2rem; }
+.close-btn { background:none; border:none; font-size:1.5rem; cursor:pointer; color:var(--muted); }
+.cart-item { display:flex; gap:12px; padding:12px 0; border-bottom:1px solid var(--border); }
+.cart-item img { width:60px; height:60px; object-fit:cover; border-radius:8px; }
+.cart-item-info { flex:1; }
+.cart-item-name { font-size:0.9rem; font-weight:600; margin-bottom:4px; }
+.cart-item-price { font-size:0.85rem; color:var(--gold); font-weight:700; }
+.qty-controls { display:flex; align-items:center; gap:8px; margin-top:8px; }
+.qty-btn { background:var(--cream); border:1px solid var(--border); width:28px; height:28px; border-radius:6px; cursor:pointer; font-size:1rem; }
+.cart-total { padding:16px 0; border-top:2px solid var(--border); margin-top:8px; }
+.total-row { display:flex; justify-content:space-between; margin-bottom:8px; font-size:0.9rem; }
+.total-row.grand { font-weight:700; font-size:1rem; color:var(--dark); }
+.checkout-btn { width:100%; background:var(--gold); color:var(--dark); border:none; padding:14px; border-radius:12px; font-size:1rem; font-weight:700; cursor:pointer; margin-top:12px; }
+.checkout-btn:hover { background:#e0b85a; }
+
+/* ORDER FORM MODAL */
+.modal-overlay { display:none; position:fixed; inset:0; background:rgba(0,0,0,0.6); z-index:300; overflow-y:auto; padding:20px; }
+.modal-overlay.open { display:flex; align-items:flex-start; justify-content:center; }
+.modal { background:#fff; border-radius:20px; padding:32px; max-width:500px; width:100%; margin:auto; }
+.modal h2 { font-family:'Playfair Display',serif; font-size:1.4rem; margin-bottom:24px; }
+.form-group { margin-bottom:16px; }
+.form-group label { display:block; font-size:0.8rem; font-weight:600; margin-bottom:6px; color:var(--muted); text-transform:uppercase; letter-spacing:0.5px; }
+.form-group input, .form-group textarea, .form-group select {
+  width:100%; padding:12px; border:2px solid var(--border); border-radius:10px;
+  font-size:0.9rem; outline:none; transition:border 0.2s;
+  font-family: 'Noto Sans Myanmar', sans-serif;
+}
+.form-group input:focus, .form-group textarea:focus { border-color:var(--gold); }
+.form-group textarea { height:80px; resize:vertical; }
+.pay-method-tabs { display:flex; gap:8px; margin-bottom:16px; }
+.pay-tab { flex:1; padding:10px; border:2px solid var(--border); border-radius:10px; cursor:pointer; text-align:center; font-size:0.85rem; background:#fff; transition:all 0.2s; }
+.pay-tab.active { border-color:var(--gold); background:rgba(201,168,76,0.1); font-weight:600; }
+.pay-details { background:var(--cream); border-radius:10px; padding:16px; margin-bottom:16px; font-size:0.85rem; line-height:1.8; }
+.upload-area {
+  border:2px dashed var(--border); border-radius:10px; padding:20px; text-align:center;
+  cursor:pointer; transition:all 0.2s; margin-bottom:16px;
+}
+.upload-area:hover { border-color:var(--gold); background:rgba(201,168,76,0.05); }
+.upload-area img { max-width:100%; max-height:200px; border-radius:8px; margin-top:10px; }
+.order-summary { background:var(--cream); border-radius:10px; padding:16px; margin-bottom:16px; font-size:0.85rem; }
+.order-summary-row { display:flex; justify-content:space-between; margin-bottom:6px; }
+.submit-order-btn { width:100%; background:var(--dark); color:#fff; border:none; padding:14px; border-radius:12px; font-size:1rem; font-weight:700; cursor:pointer; }
+.submit-order-btn:hover { background:#333; }
+.cancel-modal { width:100%; background:transparent; color:var(--muted); border:1px solid var(--border); padding:10px; border-radius:12px; font-size:0.9rem; cursor:pointer; margin-top:8px; }
+
+/* VOUCHER */
+.voucher-overlay { display:none; position:fixed; inset:0; background:rgba(0,0,0,0.7); z-index:400; padding:20px; }
+.voucher-overlay.open { display:flex; align-items:center; justify-content:center; }
+.voucher {
+  background:#fff; border-radius:20px; padding:32px; max-width:420px; width:100%;
+  border:2px solid var(--gold);
+}
+.voucher-header { text-align:center; margin-bottom:24px; padding-bottom:16px; border-bottom:2px dashed var(--border); }
+.voucher-header h2 { font-family:'Playfair Display',serif; color:var(--gold); font-size:1.4rem; }
+.voucher-header p { font-size:0.8rem; color:var(--muted); margin-top:4px; }
+.voucher-no { font-size:1.3rem; font-weight:700; color:var(--dark); margin:8px 0; }
+.voucher-row { display:flex; justify-content:space-between; margin-bottom:8px; font-size:0.85rem; }
+.voucher-items { background:var(--cream); border-radius:10px; padding:12px; margin:12px 0; }
+.voucher-item-row { display:flex; justify-content:space-between; font-size:0.85rem; margin-bottom:6px; }
+.voucher-total { font-weight:700; font-size:1rem; }
+.voucher-footer { text-align:center; margin-top:16px; padding-top:16px; border-top:2px dashed var(--border); font-size:0.75rem; color:var(--muted); }
+.voucher-actions { display:flex; gap:8px; margin-top:16px; }
+.voucher-actions button { flex:1; padding:10px; border-radius:10px; font-size:0.85rem; cursor:pointer; font-weight:600; }
+.print-btn { background:var(--dark); color:#fff; border:none; }
+.close-voucher { background:var(--cream); color:var(--text); border:1px solid var(--border); }
+
+/* ADMIN */
+.admin-overlay { display:none; position:fixed; inset:0; background:rgba(0,0,0,0.8); z-index:500; overflow-y:auto; }
+.admin-overlay.open { display:block; }
+.admin-panel { background:var(--cream); min-height:100vh; }
+.admin-nav { background:var(--dark); padding:16px 24px; display:flex; justify-content:space-between; align-items:center; }
+.admin-nav h1 { color:var(--gold); font-size:1.1rem; font-family:'Playfair Display',serif; }
+.admin-close { background:var(--red); color:#fff; border:none; padding:8px 16px; border-radius:8px; cursor:pointer; font-size:0.85rem; }
+.admin-tabs { display:flex; gap:2px; background:var(--dark); padding:0 24px; overflow-x:auto; }
+.admin-tab {
+  padding:12px 20px; color:#aaa; cursor:pointer; font-size:0.85rem; white-space:nowrap;
+  border-bottom:3px solid transparent; transition:all 0.2s;
+}
+.admin-tab.active { color:var(--gold); border-bottom-color:var(--gold); }
+.admin-content { padding:24px; max-width:900px; margin:0 auto; }
+.admin-section { display:none; }
+.admin-section.active { display:block; }
+.admin-card { background:#fff; border-radius:16px; padding:24px; margin-bottom:20px; box-shadow:var(--shadow); }
+.admin-card h3 { font-size:1rem; margin-bottom:16px; color:var(--dark); font-weight:700; }
+.admin-form-row { display:grid; grid-template-columns:1fr 1fr; gap:12px; }
+@media(max-width:600px){ .admin-form-row{grid-template-columns:1fr;} }
+.admin-input, .admin-textarea {
+  width:100%; padding:10px 14px; border:2px solid var(--border); border-radius:10px;
+  font-size:0.9rem; outline:none; transition:border 0.2s; background:#fff;
+  font-family: 'Noto Sans Myanmar', sans-serif; margin-bottom:10px;
+}
+.admin-input:focus, .admin-textarea:focus { border-color:var(--gold); }
+.admin-textarea { height:100px; resize:vertical; }
+.admin-btn { padding:10px 20px; border-radius:10px; border:none; cursor:pointer; font-size:0.85rem; font-weight:600; transition:all 0.2s; }
+.admin-btn-primary { background:var(--dark); color:#fff; }
+.admin-btn-primary:hover { background:#333; }
+.admin-btn-gold { background:var(--gold); color:var(--dark); }
+.admin-btn-gold:hover { background:#e0b85a; }
+.admin-btn-danger { background:var(--red); color:#fff; }
+.admin-btn-danger:hover { background:#a93226; }
+.admin-btn-sm { padding:6px 12px; font-size:0.78rem; }
+.menu-item-list { display:flex; flex-direction:column; gap:10px; }
+.menu-item-row {
+  display:flex; align-items:center; gap:12px; padding:12px;
+  background:var(--cream); border-radius:10px;
+}
+.menu-item-row img { width:50px; height:50px; object-fit:cover; border-radius:8px; }
+.menu-item-info { flex:1; }
+.menu-item-info strong { font-size:0.9rem; }
+.menu-item-info span { font-size:0.8rem; color:var(--muted); display:block; }
+.menu-item-actions { display:flex; gap:6px; }
+.order-list { display:flex; flex-direction:column; gap:12px; }
+.order-row { background:var(--cream); border-radius:12px; padding:16px; }
+.order-row-header { display:flex; justify-content:space-between; align-items:center; margin-bottom:8px; }
+.order-no { font-weight:700; font-size:0.9rem; }
+.status-badge { padding:4px 10px; border-radius:20px; font-size:0.75rem; font-weight:600; }
+.status-pending { background:#FFF3CD; color:#856404; }
+.status-confirmed { background:#D4EDDA; color:#155724; }
+.status-delivered { background:#D1ECF1; color:#0C5460; }
+.status-cancelled { background:#F8D7DA; color:#721C24; }
+.order-details { font-size:0.82rem; color:var(--muted); line-height:1.8; }
+.img-upload-area {
+  border:2px dashed var(--border); border-radius:10px; padding:20px; text-align:center;
+  cursor:pointer; transition:all 0.2s; margin-bottom:10px;
+}
+.img-upload-area:hover { border-color:var(--gold); }
+.img-upload-area img { max-width:100%; max-height:150px; border-radius:8px; margin-top:10px; }
+.gallery-admin-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(120px,1fr)); gap:10px; margin-top:12px; }
+.gallery-admin-item { position:relative; }
+.gallery-admin-item img { width:100%; height:100px; object-fit:cover; border-radius:8px; }
+.gallery-del-btn {
+  position:absolute; top:4px; right:4px; background:var(--red); color:#fff;
+  border:none; border-radius:50%; width:22px; height:22px; cursor:pointer; font-size:0.75rem;
+}
+.text-editor-field { margin-bottom:16px; }
+.text-editor-field label { font-size:0.8rem; font-weight:700; color:var(--muted); text-transform:uppercase; letter-spacing:0.5px; display:block; margin-bottom:6px; }
+
+/* LOGIN */
+.login-screen {
+  position:fixed; inset:0; background:var(--dark); z-index:600; display:flex;
+  align-items:center; justify-content:center; display:none;
+}
+.login-screen.show { display:flex; }
+.login-box { background:#fff; border-radius:20px; padding:40px; max-width:360px; width:100%; text-align:center; }
+.login-box h2 { font-family:'Playfair Display',serif; font-size:1.4rem; margin-bottom:8px; }
+.login-box p { color:var(--muted); font-size:0.85rem; margin-bottom:24px; }
+.login-error { color:var(--red); font-size:0.8rem; margin-bottom:10px; display:none; }
+.login-btn { width:100%; background:var(--dark); color:#fff; border:none; padding:12px; border-radius:10px; font-size:0.95rem; font-weight:700; cursor:pointer; margin-top:8px; }
+
+/* TOAST */
+.toast {
+  position:fixed; bottom:24px; left:50%; transform:translateX(-50%) translateY(100px);
+  background:var(--dark); color:#fff; padding:12px 24px; border-radius:30px;
+  font-size:0.85rem; z-index:1000; transition:transform 0.3s; white-space:nowrap;
+}
+.toast.show { transform:translateX(-50%) translateY(0); }
+.toast.success { background:var(--green); }
+.toast.error { background:var(--red); }
+
+/* FOOTER */
+footer { background:var(--dark); color:#aaa; padding:40px 24px; text-align:center; font-size:0.85rem; }
+footer .footer-links { display:flex; gap:20px; justify-content:center; flex-wrap:wrap; margin-bottom:16px; }
+footer a { color:var(--gold); text-decoration:none; }
+footer .footer-bottom { border-top:1px solid #333; padding-top:16px; margin-top:16px; }
+.whatsapp-fab {
+  position:fixed; bottom:24px; right:24px; background:#25D366; color:#fff;
+  width:56px; height:56px; border-radius:50%; display:flex; align-items:center;
+  justify-content:center; text-decoration:none; font-size:1.6rem; box-shadow:0 4px 16px rgba(37,211,102,0.4);
+  z-index:90; transition:transform 0.2s;
+}
+.whatsapp-fab:hover { transform:scale(1.1); }
+
+/* Hidden admin trigger */
+.admin-trigger { display:none; }
+
+
+/* LIGHTBOX */
+.lightbox-overlay {
+  display:none; position:fixed; inset:0; background:rgba(0,0,0,0.92);
+  z-index:2000; align-items:center; justify-content:center;
+}
+.lightbox-overlay.open { display:flex; }
+.lightbox-img {
+  max-width:92vw; max-height:88vh; border-radius:12px; object-fit:contain;
+  box-shadow:0 8px 64px rgba(0,0,0,0.8);
+  animation: lbzoom 0.2s ease;
+}
+@keyframes lbzoom { from{transform:scale(0.85);opacity:0} to{transform:scale(1);opacity:1} }
+.lightbox-close {
+  position:fixed; top:20px; right:24px; color:#fff; font-size:2rem;
+  cursor:pointer; z-index:2001; background:rgba(0,0,0,0.5); border-radius:50%;
+  width:44px; height:44px; display:flex; align-items:center; justify-content:center;
+  border:2px solid rgba(255,255,255,0.3);
+}
+.lightbox-close:hover { background:rgba(201,168,76,0.8); }
+.menu-card img { cursor:zoom-in; }
+.gallery-img { cursor:zoom-in; }
+
+/* Firebase sync indicator */
+.sync-dot {
+  width:8px; height:8px; border-radius:50%; background:#27AE60;
+  display:inline-block; margin-left:6px; animation:pulse 2s infinite;
+}
+@keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:0.5;transform:scale(1.3)} }
+.sync-dot.offline { background:#E74C3C; animation:none; }
+
+
+/* ===== MOBILE RESPONSIVE ===== */
+.hamburger {
+  display: none;
+  flex-direction: column;
+  gap: 5px;
+  cursor: pointer;
+  padding: 8px;
+  background: none;
+  border: none;
+}
+.hamburger span {
+  display: block;
+  width: 24px;
+  height: 2px;
+  background: var(--gold);
+  border-radius: 2px;
+  transition: all 0.3s;
+}
+.nav-mobile-menu {
+  display: none;
+  position: fixed;
+  top: 64px;
+  left: 0;
+  right: 0;
+  background: var(--dark);
+  padding: 12px 0;
+  z-index: 99;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.4);
+  border-top: 1px solid rgba(201,168,76,0.2);
+}
+.nav-mobile-menu.open { display: block; }
+.nav-mobile-menu a {
+  display: block;
+  color: #ccc;
+  text-decoration: none;
+  padding: 12px 24px;
+  font-size: 0.95rem;
+  border-bottom: 1px solid rgba(255,255,255,0.05);
+  transition: all 0.2s;
+}
+.nav-mobile-menu a:hover { color: var(--gold); background: rgba(201,168,76,0.1); }
+
+@media(max-width: 768px) {
+  .nav-links { display: none !important; }
+  .hamburger { display: flex; }
+  .menu-grid { grid-template-columns: repeat(2, 1fr); }
+  .hero-section { padding: 60px 16px; }
+  .section { padding: 40px 16px; }
+  nav { padding: 0 16px; }
+  .modal { padding: 20px 16px; margin: 10px; }
+  .gallery-grid { grid-template-columns: repeat(2, 1fr); }
+  .about-box { padding: 24px 16px; }
+  .findus-grid { grid-template-columns: 1fr; }
+}
+@media(max-width: 480px) {
+  .menu-grid { grid-template-columns: 1fr 1fr; }
+  .nav-logo span { font-size: 0.85rem; max-width: 140px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .nav-cart { padding: 6px 10px; font-size: 0.78rem; }
+}
+
+@media print {
+  body * { visibility:hidden; }
+  .voucher-overlay, .voucher-overlay * { visibility:visible; }
+  .voucher-actions { display:none; }
+}
+</style>
+</head>
+<body>
+
+<!-- TOAST -->
+<div class="toast" id="toast"></div>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">
+    <img src="" id="nav-logo-img" alt="TTK" onerror="this.style.display='none'">
+    <span id="nav-shop-name">TTK Myanmar Mart-UAE</span>
+  </div>
+  <div class="nav-links">
+    <a href="#menu" id="nav-menu">မီနူး</a>
+    <a href="#gallery" id="nav-gallery">ဓာတ်ပုံ</a>
+    <a href="#about" id="nav-about">အကြောင်း</a>
+    <a href="#findus" id="nav-findus">ဆက်သွယ်</a>
+    <a href="#contact" id="nav-payment">ငွေပေးချေ</a>
+  </div>
+  <div style="display:flex;align-items:center;gap:8px;">
+    <button class="hamburger" id="hamburger-btn" onclick="toggleMobileMenu()" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+    <button class="nav-cart" onclick="toggleCart()">
+      <span id="nav-cart-text">🛒 စလင်း</span> <span class="cart-badge" id="cart-count">0</span>
+    </button>
+  </div>
+</nav>
+<div class="nav-mobile-menu" id="nav-mobile-menu">
+  <a href="#menu" onclick="closeMobileMenu()" id="mob-nav-menu">မီနူး</a>
+  <a href="#gallery" onclick="closeMobileMenu()" id="mob-nav-gallery">ဓာတ်ပုံ</a>
+  <a href="#about" onclick="closeMobileMenu()" id="mob-nav-about">အကြောင်း</a>
+  <a href="#findus" onclick="closeMobileMenu()" id="mob-nav-findus">ဆက်သွယ်</a>
+</div>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-content">
+    <img src="" id="hero-logo" class="hero-logo" alt="TTK" onerror="this.style.display='none'">
+    <h1 id="hero-title">TTK Myanmar Mart-UAE</h1>
+    <p id="hero-desc">စစ်မှန်သော မြန်မာချက်နည်းများဖြင့် ချက်လပ်၊ ထားသော အရာသာများကို ဖောက်သည်များထံ ပေးပို့လိမ်မည်</p>
+    <div class="hero-btns">
+      <a href="#menu" class="btn-primary" id="hero-btn1">မီနူးကြည့်မည်</a>
+      <a href="#findus" class="btn-outline" id="hero-btn2">ဆက်သွယ်မည်</a>
+    </div>
+  </div>
+</div>
+
+<!-- MENU SECTION -->
+<section id="menu">
+  <h2 class="section-title" id="menu-section-title">မီနူးစာရင်း</h2>
+  <div class="divider"></div>
+  <div class="menu-cats" id="menu-cats"></div>
+  <div class="menu-grid" id="menu-grid"></div>
+</section>
+
+<!-- GALLERY -->
+<section id="gallery" style="background:#fff; max-width:100%; padding:60px 24px;">
+  <div style="max-width:900px; margin:0 auto;">
+    <h2 class="section-title" id="gallery-section-title">ဓာတ်ပုံများ</h2>
+    <div class="divider"></div>
+    <div class="gallery-grid" id="gallery-grid"></div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <h2 class="section-title" id="about-section-title">ကျွန်ုပ်တို့အကြောင်း</h2>
+  <div class="divider"></div>
+  <div class="about-box">
+    <p id="about-text">စစ်မှန်သော မြန်မာချက်နည်းများဖြင့် ချက်လပ်၊ ထားသော အရာသာများကို ဖောက်သည်များထံ ပေးပို့လိမ်မည်</p>
+  </div>
+</section>
+
+<!-- FIND US -->
+<section id="findus" style="background:#fff; max-width:100%; padding:60px 24px;">
+  <div style="max-width:900px; margin:0 auto;">
+    <h2 class="section-title" id="findus-section-title">ဆက်သွယ်ရန်</h2>
+    <div class="divider"></div>
+    <div class="findus-grid">
+      <div class="info-card">
+        <h3>📍 လိပ်စာ</h3>
+        <p id="address-text">UAE, Abu Dhabi, Hamdan Street Life Pharmacy Building, 11 Floor, Flat No. 116</p>
+      </div>
+      <div class="info-card">
+        <h3>📞 ဆက်သွယ်ရန်</h3>
+        <p>Phone: <a href="tel:+971555530794" id="phone-link">+971555530794</a></p>
+        <p style="margin-top:8px;">WhatsApp: <a href="https://wa.me/971521885635" id="whatsapp-link" target="_blank">+971521885635</a></p>
+      </div>
+      <div class="map-embed">
+        <iframe src="https://maps.google.com/maps?q=UAE+Abu+Dhabi+Hamdan+Street&output=embed" allowfullscreen loading="lazy"></iframe>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-links">
+    <a href="#menu">မီနူး</a>
+    <a href="#gallery">ဓာတ်ပုံ</a>
+    <a href="#about">အကြောင်း</a>
+    <a href="#findus">ဆက်သွယ်</a>
+    <a href="#contact">ငွေပေးချေ</a>
+    <a href="#" onclick="openAdminTrigger()" style="color:#444;font-size:0.75rem;">⚙</a>
+  </div>
+  <div class="footer-bottom">
+    <span id="footer-copy">© 2026 TTK Myanmar Mart-UAE. All rights reserved. <span class="sync-dot" title="Firebase sync status"></span></span>
+  </div>
+</footer>
+
+<!-- WhatsApp FAB -->
+<a class="whatsapp-fab" href="https://wa.me/971521885635" target="_blank" title="WhatsApp">💬</a>
+
+<!-- CART SIDEBAR -->
+<div class="cart-overlay" id="cart-overlay" onclick="toggleCart()"></div>
+<div class="cart-sidebar" id="cart-sidebar">
+  <div class="cart-header">
+    <h2>🛒 စလင်းများ</h2>
+    <button class="close-btn" onclick="toggleCart()">✕</button>
+  </div>
+  <div id="cart-items"></div>
+  <div class="cart-total" id="cart-total" style="display:none;">
+    <div class="total-row"><span>Subtotal</span><span id="cart-subtotal">0 AED</span></div>
+    <div class="total-row"><span>Delivery Fee</span><span>35 AED</span></div>
+    <div class="total-row grand"><span>စုစုပေါင်း</span><span id="cart-grand">35 AED</span></div>
+    <button class="checkout-btn" onclick="openOrderForm()">Order ပေးပို့မည် →</button>
+  </div>
+  <div id="cart-empty" style="text-align:center;padding:40px;color:var(--muted);">
+    <div style="font-size:3rem;">🛒</div>
+    <p style="margin-top:12px;">စလင်း မရှိသေးပါ</p>
+  </div>
+</div>
+
+<!-- ORDER FORM MODAL -->
+<div class="modal-overlay" id="order-modal">
+  <div class="modal">
+    <h2>📋 Order ပေးပို့မည်</h2>
+    <div class="form-group">
+      <label>အမည်</label>
+      <input type="text" id="order-name" placeholder="သင့်အမည်">
+    </div>
+    <div class="form-group">
+      <label>WhatsApp နံပါတ်</label>
+      <input type="tel" id="order-phone" placeholder="+971...">
+    </div>
+    <div class="form-group">
+      <label>လိပ်စာ / Delivery Location</label>
+      <textarea id="order-address" placeholder="သင့်လိပ်စာ အသေးစိတ်"></textarea>
+    </div>
+    <div class="form-group">
+      <label>မှတ်ချက်</label>
+      <input type="text" id="order-note" placeholder="တိုင်ချင်တာ ရှိရင်...">
+    </div>
+    <div class="form-group">
+      <label>ငွေပေးချေနည်း</label>
+      <div class="pay-method-tabs">
+        <div class="pay-tab active" onclick="selectPayMethod('bank',this)">🏦 Bank Transfer</div>
+        <div class="pay-tab" onclick="selectPayMethod('kpay',this)">📱 KPay</div>
+        <div class="pay-tab" onclick="selectPayMethod('cash',this)">💵 Cash</div>
+      </div>
+      <div class="pay-details" id="pay-details-show" style="background:#f0f7ff;border-radius:10px;padding:12px;margin-top:8px;color:#1a5276;font-size:0.9rem;">
+        ✅ Order confirm ဖြစ်ပြီးနောက် WhatsApp မှတဆင့် payment details ပေးပို့ပါမည်။
+      </div>
+    </div>
+    <div class="form-group" id="screenshot-group" style="display:none">
+      <label>ငွေပေးချေမှု Screenshot</label>
+      <div class="upload-area" onclick="document.getElementById('pay-screenshot').click()">
+        <div id="screenshot-placeholder">📸 Screenshot upload လုပ်ပါ</div>
+        <input type="file" id="pay-screenshot" accept="image/*" style="display:none" onchange="previewScreenshot(this)">
+      </div>
+    </div>
+    <div class="order-summary" id="order-summary-box"></div>
+    <button class="submit-order-btn" onclick="submitOrder()">Order တင်မည် ✓</button>
+    <button class="cancel-modal" onclick="closeOrderForm()">မပေးပို့တော့ပါ</button>
+  </div>
+</div>
+
+<!-- VOUCHER -->
+<div class="voucher-overlay" id="voucher-overlay">
+  <div class="voucher" id="voucher-content">
+    <div class="voucher-header">
+      <h2>TTK Myanmar Mart-UAE</h2>
+      <p>Order Confirmation Voucher</p>
+      <div class="voucher-no" id="v-order-no">#TTK-000001</div>
+    </div>
+    <div class="voucher-row"><span>📅 ရက်စွဲ</span><span id="v-date"></span></div>
+    <div class="voucher-row"><span>👤 အမည်</span><span id="v-name"></span></div>
+    <div class="voucher-row"><span>📱 WhatsApp</span><span id="v-phone"></span></div>
+    <div class="voucher-row"><span>📍 လိပ်စာ</span><span id="v-address" style="max-width:200px;text-align:right;"></span></div>
+    <div class="voucher-row"><span>💳 ငွေပေးချေ</span><span id="v-payment"></span></div>
+    <div class="voucher-items" id="v-items"></div>
+    <div class="voucher-row voucher-total"><span>Delivery Fee</span><span>35 AED</span></div>
+    <div class="voucher-row voucher-total" style="border-top:2px solid var(--gold);padding-top:8px;margin-top:4px;">
+      <span>စုစုပေါင်း</span><span id="v-total"></span>
+    </div>
+    <div class="voucher-footer">
+      TTK Myanmar Mart-UAE<br>
+      📞 +971555530794 | 💬 +971521885635<br>
+      ကျေးဇူးတင်ပါသည် 🙏
+    </div>
+    <div class="voucher-actions">
+      <button class="print-btn" onclick="window.print()">🖨️ Print</button>
+      <button class="close-voucher" onclick="closeVoucher()">✕ ပိတ်မည်</button>
+    </div>
+  </div>
+</div>
+
+
+<!-- LIGHTBOX -->
+<div class="lightbox-overlay" id="lightbox-overlay" onclick="closeLightbox()">
+  <div class="lightbox-close" onclick="closeLightbox()">✕</div>
+  <img class="lightbox-img" id="lightbox-img" src="" alt="" onclick="event.stopPropagation()">
+</div>
+
+<!-- ADMIN LOGIN -->
+<div class="login-screen" id="login-screen">
+  <div class="login-box">
+    <h2>🔐 Admin Login</h2>
+    <p>Admin Panel ဝင်ရောက်ရန်</p>
+    <div class="login-error" id="login-error">Username သို့မဟုတ် Password မမှန်ပါ</div>
+    <div class="form-group">
+      <label>Username</label>
+      <input type="text" class="admin-input" id="login-user" placeholder="username">
+    </div>
+    <div class="form-group">
+      <label>Password</label>
+      <input type="password" class="admin-input" id="login-pass" placeholder="password">
+    </div>
+    <button class="login-btn" onclick="doLogin()">Login</button>
+    <button class="cancel-modal" style="margin-top:8px;width:100%;padding:10px;border-radius:10px;background:transparent;border:1px solid var(--border);cursor:pointer;" onclick="closeLogin()">မဝင်တော့ပါ</button>
+  </div>
+</div>
+
+<!-- ADMIN PANEL -->
+<div class="admin-overlay" id="admin-overlay">
+  <div class="admin-panel">
+    <div class="admin-nav">
+      <h1>⚙️ Admin Panel — TTK Myanmar Mart</h1>
+      <button class="admin-close" onclick="closeAdmin()">✕ ထွက်မည်</button>
+    </div>
+    <div class="admin-tabs">
+      <div class="admin-tab active" onclick="switchAdminTab('orders',this)">📋 Orders</div>
+      <div class="admin-tab" onclick="switchAdminTab('menu',this)">🍽️ Menu</div>
+      <div class="admin-tab" onclick="switchAdminTab('gallery',this)">🖼️ Gallery</div>
+      <div class="admin-tab" onclick="switchAdminTab('texts',this)">✏️ စာသား</div>
+      <div class="admin-tab" onclick="switchAdminTab('settings',this)">⚙️ Settings</div>
+    </div>
+    <div class="admin-content">
+
+      <!-- ORDERS TAB -->
+      <div class="admin-section active" id="admin-orders">
+        <div class="admin-card">
+          <h3>📋 Orders စာရင်း</h3>
+          <div class="order-list" id="admin-order-list"></div>
+        </div>
+      </div>
+
+      <!-- MENU TAB -->
+      <div class="admin-section" id="admin-menu">
+        <div class="admin-card">
+          <h3>➕ Menu Item အသစ်ထည့်မည်</h3>
+          <div class="admin-form-row">
+            <div>
+              <label style="font-size:0.8rem;font-weight:600;color:var(--muted);">Category</label>
+              <input class="admin-input" id="new-cat" placeholder="ဥပမာ: သုပ်စားမျိုး">
+            </div>
+            <div>
+              <label style="font-size:0.8rem;font-weight:600;color:var(--muted);">Item Name</label>
+              <input class="admin-input" id="new-name" placeholder="ဥပမာ: လပက်သုပ်">
+            </div>
+          </div>
+          <div class="admin-form-row">
+            <div>
+              <label style="font-size:0.8rem;font-weight:600;color:var(--muted);">ဈေးနှုန်း (AED)</label>
+              <input class="admin-input" id="new-price" type="number" placeholder="25">
+            </div>
+            <div>
+              <label style="font-size:0.8rem;font-weight:600;color:var(--muted);">ရှင်းလင်းချက်</label>
+              <input class="admin-input" id="new-desc" placeholder="အကျဉ်းချုပ်...">
+            </div>
+          </div>
+          <label style="font-size:0.8rem;font-weight:600;color:var(--muted);">Item ဓာတ်ပုံ</label>
+          <div class="img-upload-area" onclick="document.getElementById('new-item-img').click()">
+            <span>📷 ဓာတ်ပုံ ရွေးပါ</span>
+            <img id="new-item-img-preview" style="display:none;">
+            <input type="file" id="new-item-img" accept="image/*" style="display:none" onchange="previewMenuImg(this)">
+          </div>
+          <button class="admin-btn admin-btn-primary" onclick="addMenuItem()">➕ ထည့်မည်</button>
+        </div>
+        <div class="admin-card">
+          <h3>📋 Menu Items</h3>
+          <div class="menu-item-list" id="admin-menu-list"></div>
+        </div>
+      </div>
+
+      <!-- GALLERY TAB -->
+      <div class="admin-section" id="admin-gallery">
+        <div class="admin-card">
+          <h3>🖼️ ဓာတ်ပုံ ထည့်မည်</h3>
+          <div class="img-upload-area" onclick="document.getElementById('gallery-upload').click()">
+            <span>📷 ဓာတ်ပုံ ရွေးပါ (Multiple ရွေး၍ ရသည်)</span>
+            <input type="file" id="gallery-upload" accept="image/*" multiple style="display:none" onchange="addGalleryImages(this)">
+          </div>
+        </div>
+        <div class="admin-card">
+          <h3>📷 Gallery ဓာတ်ပုံများ</h3>
+          <div class="gallery-admin-grid" id="admin-gallery-grid"></div>
+        </div>
+      </div>
+
+      <!-- TEXTS TAB -->
+      <div class="admin-section" id="admin-texts">
+        <div class="admin-card">
+          <h3>✏️ Website စာသားများ ပြင်မည်</h3>
+          <div class="text-editor-field">
+            <label>Shop Name (Nav & Hero)</label>
+            <input class="admin-input" id="txt-shopname" value="TTK Myanmar Mart-UAE">
+          </div>
+          <div class="text-editor-field">
+            <label>Hero Description</label>
+            <textarea class="admin-textarea" id="txt-herodesc">စစ်မှန်သော မြန်မာချက်နည်းများဖြင့် ချက်လပ်၊ ထားသော အရာသာများကို ဖောက်သည်များထံ ပေးပို့လိမ်မည်</textarea>
+          </div>
+          <div class="text-editor-field">
+            <label>About Us စာသား</label>
+            <textarea class="admin-textarea" id="txt-about">စစ်မှန်သော မြန်မာချက်နည်းများဖြင့် ချက်လပ်၊ ထားသော အရာသာများကို ဖောက်သည်များထံ ပေးပို့လိမ်မည်</textarea>
+          </div>
+          <div class="text-editor-field">
+            <label>Address</label>
+            <input class="admin-input" id="txt-address" value="UAE, Abu Dhabi, Hamdan Street Life Pharmacy Building, 11 Floor, Flat No. 116">
+          </div>
+          <div class="text-editor-field">
+            <label>Phone No</label>
+            <input class="admin-input" id="txt-phone" value="+971555530794">
+          </div>
+          <div class="text-editor-field">
+            <label>WhatsApp No</label>
+            <input class="admin-input" id="txt-whatsapp" value="+971521885635">
+          </div>
+          <div class="text-editor-field">
+            <label>Logo Upload</label>
+            <div class="img-upload-area" onclick="document.getElementById('logo-upload').click()">
+              <span>📷 Logo ရွေးပါ</span>
+              <input type="file" id="logo-upload" accept="image/*" style="display:none" onchange="uploadLogo(this)">
+            </div>
+          </div>
+          <hr style="border:none;border-top:1px solid var(--border);margin:16px 0;">
+          <h4 style="font-size:0.85rem;color:var(--muted);margin-bottom:12px;">🔘 Nav Menu စာသားများ</h4>
+          <div class="admin-form-row">
+            <div><label style="font-size:0.75rem;font-weight:600;color:var(--muted);">မီနူး Link</label><input class="admin-input" id="txt-nav-menu" value="မီနူး"></div>
+            <div><label style="font-size:0.75rem;font-weight:600;color:var(--muted);">ဓာတ်ပုံ Link</label><input class="admin-input" id="txt-nav-gallery" value="ဓာတ်ပုံ"></div>
+          </div>
+          <div class="admin-form-row">
+            <div><label style="font-size:0.75rem;font-weight:600;color:var(--muted);">အကြောင်း Link</label><input class="admin-input" id="txt-nav-about" value="အကြောင်း"></div>
+            <div><label style="font-size:0.75rem;font-weight:600;color:var(--muted);">ဆက်သွယ် Link</label><input class="admin-input" id="txt-nav-findus" value="ဆက်သွယ်"></div>
+          </div>
+          <div class="admin-form-row">
+            <div><label style="font-size:0.75rem;font-weight:600;color:var(--muted);">ငွေပေးချေ Link</label><input class="admin-input" id="txt-nav-payment" value="ငွေပေးချေ"></div>
+            <div><label style="font-size:0.75rem;font-weight:600;color:var(--muted);">Cart Button</label><input class="admin-input" id="txt-nav-cart" value="🛒 စလင်း"></div>
+          </div>
+          <hr style="border:none;border-top:1px solid var(--border);margin:16px 0;">
+          <h4 style="font-size:0.85rem;color:var(--muted);margin-bottom:12px;">🔲 Hero Buttons</h4>
+          <div class="admin-form-row">
+            <div><label style="font-size:0.75rem;font-weight:600;color:var(--muted);">Button 1 (Gold)</label><input class="admin-input" id="txt-hero-btn1" value="မီနူးကြည့်မည်"></div>
+            <div><label style="font-size:0.75rem;font-weight:600;color:var(--muted);">Button 2 (Outline)</label><input class="admin-input" id="txt-hero-btn2" value="ဆက်သွယ်မည်"></div>
+          </div>
+          <hr style="border:none;border-top:1px solid var(--border);margin:16px 0;">
+          <h4 style="font-size:0.85rem;color:var(--muted);margin-bottom:12px;">📌 Section Titles</h4>
+          <div class="admin-form-row">
+            <div><label style="font-size:0.75rem;font-weight:600;color:var(--muted);">မီနူး Section Title</label><input class="admin-input" id="txt-sec-menu" value="မီနူးစာရင်း"></div>
+            <div><label style="font-size:0.75rem;font-weight:600;color:var(--muted);">ဓာတ်ပုံ Section Title</label><input class="admin-input" id="txt-sec-gallery" value="ဓာတ်ပုံများ"></div>
+          </div>
+          <div class="admin-form-row">
+            <div><label style="font-size:0.75rem;font-weight:600;color:var(--muted);">အကြောင်း Section Title</label><input class="admin-input" id="txt-sec-about" value="ကျွန်ုပ်တို့အကြောင်း"></div>
+            <div><label style="font-size:0.75rem;font-weight:600;color:var(--muted);">ဆက်သွယ် Section Title</label><input class="admin-input" id="txt-sec-findus" value="ဆက်သွယ်ရန်"></div>
+          </div>
+          <div class="admin-form-row">
+            <div><label style="font-size:0.75rem;font-weight:600;color:var(--muted);">ငွေပေးချေ Section Title</label><input class="admin-input" id="txt-sec-payment" value="ငွေပေးချေနည်း"></div>
+          </div>
+          <button class="admin-btn admin-btn-gold" onclick="saveTexts()">💾 သိမ်းမည်</button>
+        </div>
+      </div>
+
+      <!-- SETTINGS TAB -->
+      <div class="admin-section" id="admin-settings">
+        <div class="admin-card">
+          <h3>🔒 Password ပြောင်းမည်</h3>
+          <input class="admin-input" id="new-password" type="password" placeholder="Password အသစ်">
+          <button class="admin-btn admin-btn-primary" onclick="changePassword()">ပြောင်းမည်</button>
+        </div>
+        <div class="admin-card" style="border-top:4px solid #3498DB;">
+          <h3>🔥 Firebase Setup (Real-time Sync)</h3>
+          <p style="font-size:0.82rem;color:var(--muted);margin-bottom:12px;line-height:1.7;">
+            Admin ပြင်တာကို Customer တွေ real-time မြင်ဖို့ Firebase ချိတ်ဖို့လိုသည်။<br>
+            1. <a href="https://console.firebase.google.com" target="_blank" style="color:var(--gold);">console.firebase.google.com</a> မှ project အသစ်ဖန်တီးပါ<br>
+            2. Realtime Database enable လုပ်ပါ (test mode)<br>
+            3. Project Settings > Web App > firebaseConfig ကူးပါ<br>
+            4. HTML ထဲ firebaseConfig section ထဲ paste လုပ်ပါ
+          </p>
+          <div id="firebase-status" style="font-size:0.82rem;padding:8px 12px;border-radius:8px;background:#F0FFF4;color:#27AE60;">
+            ✓ Firebase ready (configured ဖြစ်ပါက green ပြမည်)
+          </div>
+        </div>
+        <div class="admin-card">
+          <h3>🗑️ Data ရှင်းမည်</h3>
+          <p style="font-size:0.85rem;color:var(--muted);margin-bottom:12px;">Orders တွေ ရှင်းချင်ရင်သာ နှိပ်ပါ</p>
+          <button class="admin-btn admin-btn-danger" onclick="clearOrders()">Orders ရှင်းမည်</button>
+        </div>
+        <div class="admin-card">
+          <h3>🎨 Theme ပြောင်းမည်</h3>
+          <p style="font-size:0.82rem;color:var(--muted);margin-bottom:16px;">Preset themes ရွေးချယ်နိုင်သည် သို့မဟုတ် custom color သတ်မှတ်နိုင်သည်</p>
+          <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:20px;">
+            <div onclick="applyTheme('gold')" style="cursor:pointer;border-radius:12px;overflow:hidden;border:2px solid var(--border);transition:all 0.2s;" onmouseover="this.style.borderColor='#C9A84C'" onmouseout="this.style.borderColor='var(--border)'">
+              <div style="height:40px;background:linear-gradient(135deg,#1a1a1a,#2c1810);"></div>
+              <div style="padding:8px;text-align:center;font-size:0.75rem;font-weight:600;">🏆 Gold Dark</div>
+            </div>
+            <div onclick="applyTheme('emerald')" style="cursor:pointer;border-radius:12px;overflow:hidden;border:2px solid var(--border);transition:all 0.2s;" onmouseover="this.style.borderColor='#27AE60'" onmouseout="this.style.borderColor='var(--border)'">
+              <div style="height:40px;background:linear-gradient(135deg,#1a3a2a,#0d2d1e);"></div>
+              <div style="padding:8px;text-align:center;font-size:0.75rem;font-weight:600;">💚 Emerald</div>
+            </div>
+            <div onclick="applyTheme('ruby')" style="cursor:pointer;border-radius:12px;overflow:hidden;border:2px solid var(--border);transition:all 0.2s;" onmouseover="this.style.borderColor='#C0392B'" onmouseout="this.style.borderColor='var(--border)'">
+              <div style="height:40px;background:linear-gradient(135deg,#3a1a1a,#2d0d0d);"></div>
+              <div style="padding:8px;text-align:center;font-size:0.75rem;font-weight:600;">❤️ Ruby Red</div>
+            </div>
+            <div onclick="applyTheme('ocean')" style="cursor:pointer;border-radius:12px;overflow:hidden;border:2px solid var(--border);transition:all 0.2s;" onmouseover="this.style.borderColor='#2980B9'" onmouseout="this.style.borderColor='var(--border)'">
+              <div style="height:40px;background:linear-gradient(135deg,#1a2a3a,#0d1d2d);"></div>
+              <div style="padding:8px;text-align:center;font-size:0.75rem;font-weight:600;">🌊 Ocean Blue</div>
+            </div>
+            <div onclick="applyTheme('rose')" style="cursor:pointer;border-radius:12px;overflow:hidden;border:2px solid var(--border);transition:all 0.2s;" onmouseover="this.style.borderColor='#E91E8C'" onmouseout="this.style.borderColor='var(--border)'">
+              <div style="height:40px;background:linear-gradient(135deg,#3a1a2a,#2d0d1e);"></div>
+              <div style="padding:8px;text-align:center;font-size:0.75rem;font-weight:600;">🌸 Rose Pink</div>
+            </div>
+            <div onclick="applyTheme('purple')" style="cursor:pointer;border-radius:12px;overflow:hidden;border:2px solid var(--border);transition:all 0.2s;" onmouseover="this.style.borderColor='#8E44AD'" onmouseout="this.style.borderColor='var(--border)'">
+              <div style="height:40px;background:linear-gradient(135deg,#2a1a3a,#1d0d2d);"></div>
+              <div style="padding:8px;text-align:center;font-size:0.75rem;font-weight:600;">💜 Purple</div>
+            </div>
+          </div>
+          <hr style="border:none;border-top:1px solid var(--border);margin:16px 0;">
+          <h4 style="font-size:0.85rem;color:var(--muted);margin-bottom:12px;">🖌️ Custom Colors</h4>
+          <div class="admin-form-row">
+            <div>
+              <label style="font-size:0.75rem;font-weight:600;color:var(--muted);">Accent Color (Button/Gold)</label>
+              <div style="display:flex;gap:8px;align-items:center;">
+                <input type="color" id="custom-accent" value="#C9A84C" style="width:48px;height:40px;border:2px solid var(--border);border-radius:8px;cursor:pointer;padding:2px;">
+                <input class="admin-input" id="custom-accent-hex" value="#C9A84C" placeholder="#C9A84C" style="margin-bottom:0;flex:1;">
+              </div>
+            </div>
+            <div>
+              <label style="font-size:0.75rem;font-weight:600;color:var(--muted);">Dark Background Color</label>
+              <div style="display:flex;gap:8px;align-items:center;">
+                <input type="color" id="custom-dark" value="#1a1a1a" style="width:48px;height:40px;border:2px solid var(--border);border-radius:8px;cursor:pointer;padding:2px;">
+                <input class="admin-input" id="custom-dark-hex" value="#1a1a1a" placeholder="#1a1a1a" style="margin-bottom:0;flex:1;">
+              </div>
+            </div>
+          </div>
+          <div class="admin-form-row">
+            <div>
+              <label style="font-size:0.75rem;font-weight:600;color:var(--muted);">Background Color</label>
+              <div style="display:flex;gap:8px;align-items:center;">
+                <input type="color" id="custom-bg" value="#FAF7F2" style="width:48px;height:40px;border:2px solid var(--border);border-radius:8px;cursor:pointer;padding:2px;">
+                <input class="admin-input" id="custom-bg-hex" value="#FAF7F2" placeholder="#FAF7F2" style="margin-bottom:0;flex:1;">
+              </div>
+            </div>
+            <div>
+              <label style="font-size:0.75rem;font-weight:600;color:var(--muted);">Main Text Color</label>
+              <div style="display:flex;gap:8px;align-items:center;">
+                <input type="color" id="custom-text" value="#2c2c2c" style="width:48px;height:40px;border:2px solid var(--border);border-radius:8px;cursor:pointer;padding:2px;">
+                <input class="admin-input" id="custom-text-hex" value="#2c2c2c" placeholder="#2c2c2c" style="margin-bottom:0;flex:1;">
+              </div>
+            </div>
+          </div>
+          <div class="admin-form-row">
+            <div>
+              <label style="font-size:0.75rem;font-weight:600;color:var(--muted);">Section Title Color</label>
+              <div style="display:flex;gap:8px;align-items:center;">
+                <input type="color" id="custom-title" value="#1a1a1a" style="width:48px;height:40px;border:2px solid var(--border);border-radius:8px;cursor:pointer;padding:2px;">
+                <input class="admin-input" id="custom-title-hex" value="#1a1a1a" placeholder="#1a1a1a" style="margin-bottom:0;flex:1;">
+              </div>
+            </div>
+            <div>
+              <label style="font-size:0.75rem;font-weight:600;color:var(--muted);">Muted / Sub Text Color</label>
+              <div style="display:flex;gap:8px;align-items:center;">
+                <input type="color" id="custom-muted" value="#888888" style="width:48px;height:40px;border:2px solid var(--border);border-radius:8px;cursor:pointer;padding:2px;">
+                <input class="admin-input" id="custom-muted-hex" value="#888888" placeholder="#888888" style="margin-bottom:0;flex:1;">
+              </div>
+            </div>
+          </div>
+          <button class="admin-btn admin-btn-gold" onclick="applyCustomTheme()" style="margin-top:8px;">🎨 Custom Theme သုံးမည်</button>
+        </div>
+
+    </div>
+  </div>
+</div>
+
+<script type="module">
+// ========== FIREBASE CONFIG ==========
+import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js';
+import { getDatabase, ref, set, onValue, get } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js';
+
+const firebaseConfig = {
+  apiKey: "AIzaSyDMEQuhfTMNhoRBpiK0qxqeXD5y1C8RlFk",
+  authDomain: "ttk-myanmar-mart-uae.firebaseapp.com",
+  databaseURL: "https://ttk-myanmar-mart-uae-default-rtdb.firebaseio.com",
+  projectId: "ttk-myanmar-mart-uae",
+  storageBucket: "ttk-myanmar-mart-uae.firebasestorage.app",
+  messagingSenderId: "1966893818",
+  appId: "1:1966893818:web:869552177903c1a3a3b743",
+  measurementId: "G-6JSB1JBTSB"
+};
+
+// NOTE: Replace firebaseConfig above with your actual Firebase project config.
+// Get it from: Firebase Console > Project Settings > Your apps > Web app
+window._firebaseReady = false;
+
+try {
+  const app = initializeApp(firebaseConfig);
+  const db = getDatabase(app);
+  window._db = db;
+  window._fbRef = ref;
+  window._fbSet = set;
+  window._fbOnValue = onValue;
+  window._fbGet = get;
+  window._firebaseReady = true;
+  
+  // Listen for store changes from Firebase (real-time sync)
+  onValue(ref(db, 'ttkStore'), (snapshot) => {
+    if (snapshot.exists()) {
+      const fbData = snapshot.val();
+      // Merge with current store, firebase takes priority for shared data
+      if (typeof store !== 'undefined') {
+        const prevMenu = store.menuItems;
+        store = { ...store, ...fbData };
+        // Re-render if menu/gallery/texts changed
+        if (JSON.stringify(prevMenu) !== JSON.stringify(store.menuItems)) {
+          renderMenu();
+        }
+        renderGallery();
+        applyTexts();
+        applyThemeColors(store.themeAccent, store.themeDark, store.themeBg,
+          (window._THEMES && window._THEMES[store.theme] ? window._THEMES[store.theme].heroBg : 
+          `linear-gradient(135deg,${store.themeDark} 0%,${store.themeDark}cc 50%,${store.themeDark}aa 100%)`),
+          store.themeText, store.themeTitle, store.themeMuted);
+        updateSyncDot(true);
+      }
+    }
+  }, (error) => {
+    console.warn('Firebase read error:', error);
+    updateSyncDot(false);
+  });
+  
+  console.log('Firebase connected ✓');
+} catch(e) {
+  console.warn('Firebase not configured yet. Using localStorage fallback.', e.message);
+}
+
+function updateSyncDot(online) {
+  const dots = document.querySelectorAll('.sync-dot');
+  dots.forEach(d => {
+    d.classList.toggle('offline', !online);
+    d.title = online ? 'Firebase synced' : 'Offline mode';
+  });
+}
+
+window._saveToFirebase = function(storeData) {
+  if (!window._firebaseReady || !window._db) return;
+  // Strip large base64 images from firebase (store separately or use Cloudinary)
+  // Images are stored in localStorage only; firebase stores metadata
+  const fbSafe = JSON.parse(JSON.stringify(storeData));
+  // Keep small images (< 50kb base64) in firebase, strip large ones
+  if (fbSafe.menuItems) {
+    fbSafe.menuItems = fbSafe.menuItems.map(item => {
+      if (item.img && item.img.length > 65000) {
+        return { ...item, img: item.img }; // keep as-is for now
+      }
+      return item;
+    });
+  }
+  if (fbSafe.gallery) {
+    fbSafe.gallery = fbSafe.gallery.map(g => ({ ...g }));
+  }
+  // Remove orders from public sync (admin-only)
+  const publicData = { ...fbSafe };
+  delete publicData.orders;
+  delete publicData.adminPassword;
+  delete publicData.orderCounter;
+  
+  window._fbSet(window._fbRef(window._db, 'ttkStore'), publicData)
+    .then(() => updateSyncDot(true))
+    .catch(e => { console.warn('Firebase write error:', e); updateSyncDot(false); });
+};
+
+</script>
+
+<script>
+// ============ DATA STORE ============
+let store = {
+  shopName: 'TTK Myanmar Mart-UAE',
+  heroDesc: 'စစ်မှန်သော မြန်မာချက်နည်းများဖြင့် ချက်လပ်၊ ထားသော အရာသာများကို ဖောက်သည်များထံ ပေးပို့လိမ်မည်',
+  about: 'စစ်မှန်သော မြန်မာချက်နည်းများဖြင့် ချက်လပ်၊ ထားသော အရာသာများကို ဖောက်သည်များထံ ပေးပို့လိမ်မည်',
+  address: 'UAE, Abu Dhabi, Hamdan Street Life Pharmacy Building, 11 Floor, Flat No. 116',
+  phone: '+971555530794',
+  whatsapp: '+971521885635',
+  logo: '',
+  adminPassword: 'Myatlin5G',
+  deliveryFee: 35,
+  navMenu: 'မီနူး', navGallery: 'ဓာတ်ပုံ', navAbout: 'အကြောင်း', navFindus: 'ဆက်သွယ်', navPayment: 'ငွေပေးချေ', navCart: '🛒 စလင်း',
+  heroBtn1: 'မီနူးကြည့်မည်', heroBtn2: 'ဆက်သွယ်မည်',
+  secMenu: 'မီနူးစာရင်း', secGallery: 'ဓာတ်ပုံများ', secAbout: 'ကျွန်ုပ်တို့အကြောင်း', secFindus: 'ဆက်သွယ်ရန်', secPayment: 'ငွေပေးချေနည်း',
+  theme: 'gold', themeAccent: '#C9A84C', themeDark: '#1a1a1a', themeBg: '#FAF7F2',
+  themeText: '#2c2c2c', themeTitle: '#1a1a1a', themeMuted: '#888888',
+  menuItems: [],
+  gallery: [],
+  orders: [],
+  orderCounter: 1
+};
+
+function loadStore() {
+  try {
+    const s = localStorage.getItem('ttk_store');
+    if (s) store = { ...store, ...JSON.parse(s) };
+  } catch(e) {}
+}
+function saveStore() {
+  try {
+    // Compress images before saving to avoid localStorage overflow
+    const storeCopy = JSON.parse(JSON.stringify(store));
+    localStorage.setItem('ttk_store', JSON.stringify(storeCopy));
+  } catch(e) {
+    // localStorage full - try clearing old data
+    try {
+      localStorage.removeItem('ttk_store');
+      // Save without images as fallback
+      const noImg = JSON.parse(JSON.stringify(store));
+      if (noImg.gallery) noImg.gallery = noImg.gallery.map(g => ({...g, src: g.src.substring(0,100)+'...'}));
+      localStorage.setItem('ttk_store_meta', JSON.stringify({
+        shopName: noImg.shopName, heroDesc: noImg.heroDesc, about: noImg.about,
+        address: noImg.address, phone: noImg.phone, whatsapp: noImg.whatsapp,
+        orders: noImg.orders, orderCounter: noImg.orderCounter,
+        theme: noImg.theme, themeAccent: noImg.themeAccent, themeDark: noImg.themeDark,
+        themeBg: noImg.themeBg, themeText: noImg.themeText, deliveryFee: noImg.deliveryFee
+      }));
+      console.warn('localStorage full, saved metadata only');
+    } catch(e2) { console.error('Storage completely full:', e2); }
+  }
+  // Sync to Firebase for real-time sharing
+  if (typeof window._saveToFirebase === 'function') {
+    window._saveToFirebase(store);
+  }
+}
+
+// ============ CART ============
+let cart = [];
+let payMethod = 'bank';
+let screenshotData = '';
+
+function toggleCart() {
+  const s = document.getElementById('cart-sidebar');
+  const o = document.getElementById('cart-overlay');
+  s.classList.toggle('open');
+  o.classList.toggle('open');
+  renderCart();
+}
+function addToCart(id) {
+  const item = store.menuItems.find(i => i.id === id);
+  if (!item) return;
+  const ex = cart.find(c => c.id === id);
+  if (ex) ex.qty++;
+  else cart.push({ ...item, qty: 1 });
+  updateCartBadge();
+  showToast('✓ ' + item.name + ' ထည့်ပြီးပါပြီ', 'success');
+  renderCart();
+}
+function updateCartBadge() {
+  const total = cart.reduce((a, c) => a + c.qty, 0);
+  document.getElementById('cart-count').textContent = total;
+}
+function changeQty(id, delta) {
+  const idx = cart.findIndex(c => c.id === id);
+  if (idx < 0) return;
+  cart[idx].qty += delta;
+  if (cart[idx].qty <= 0) cart.splice(idx, 1);
+  updateCartBadge();
+  renderCart();
+}
+function renderCart() {
+  const el = document.getElementById('cart-items');
+  const empty = document.getElementById('cart-empty');
+  const total = document.getElementById('cart-total');
+  if (!cart.length) {
+    el.innerHTML = '';
+    empty.style.display = 'block';
+    total.style.display = 'none';
+    return;
+  }
+  empty.style.display = 'none';
+  total.style.display = 'block';
+  el.innerHTML = cart.map(c => `
+    <div class="cart-item">
+      ${c.img ? `<img src="${c.img}" alt="${c.name}">` : `<div style="width:60px;height:60px;background:var(--cream);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:1.5rem;">🍽️</div>`}
+      <div class="cart-item-info">
+        <div class="cart-item-name">${c.name}</div>
+        <div class="cart-item-price">${(c.price * c.qty).toFixed(0)} AED</div>
+        <div class="qty-controls">
+          <button class="qty-btn" onclick="changeQty('${c.id}',-1)">-</button>
+          <span>${c.qty}</span>
+          <button class="qty-btn" onclick="changeQty('${c.id}',1)">+</button>
+        </div>
+      </div>
+    </div>
+  `).join('');
+  const sub = cart.reduce((a, c) => a + c.price * c.qty, 0);
+  document.getElementById('cart-subtotal').textContent = sub.toFixed(0) + ' AED';
+  document.getElementById('cart-grand').textContent = (sub + store.deliveryFee).toFixed(0) + ' AED';
+}
+
+// ============ ORDER ============
+function openOrderForm() {
+  renderOrderSummary();
+  document.getElementById('order-modal').classList.add('open');
+}
+function closeOrderForm() {
+  document.getElementById('order-modal').classList.remove('open');
+}
+function renderOrderSummary() {
+  const sub = cart.reduce((a, c) => a + c.price * c.qty, 0);
+  const grand = sub + store.deliveryFee;
+  document.getElementById('order-summary-box').innerHTML = `
+    <strong style="display:block;margin-bottom:8px;">Order Summary</strong>
+    ${cart.map(c => `<div class="order-summary-row"><span>${c.name} x${c.qty}</span><span>${(c.price*c.qty).toFixed(0)} AED</span></div>`).join('')}
+    <div class="order-summary-row"><span>Delivery Fee</span><span>${store.deliveryFee} AED</span></div>
+    <div class="order-summary-row" style="font-weight:700;border-top:1px solid var(--border);padding-top:6px;margin-top:4px;"><span>စုစုပေါင်း</span><span>${grand.toFixed(0)} AED</span></div>
+  `;
+}
+function selectPayMethod(method, el) {
+  payMethod = method;
+  document.querySelectorAll('.pay-tab').forEach(t => t.classList.remove('active'));
+  el.classList.add('active');
+  const details = document.getElementById('pay-details-show');
+  if (method === 'bank') {
+    details.innerHTML = '✅ Order confirm ဖြစ်ပြီးနောက် Bank Transfer details WhatsApp မှတဆင့် ပေးပို့ပါမည်။';
+  } else if (method === 'kpay') {
+    details.innerHTML = '✅ Order confirm ဖြစ်ပြီးနောက် KPay number WhatsApp မှတဆင့် ပေးပို့ပါမည်။';
+  } else {
+    details.innerHTML = '✅ ပစ္စည်း ပေးပို့သောအခါ ငွေပေးရမည်။';
+  }
+}
+function previewScreenshot(input) {
+  const file = input.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = e => {
+    screenshotData = e.target.result;
+    document.getElementById('screenshot-placeholder').innerHTML = `<img src="${screenshotData}" style="max-width:100%;max-height:200px;border-radius:8px;">`;
+  };
+  reader.readAsDataURL(file);
+}
+function submitOrder() {
+  const name = document.getElementById('order-name').value.trim();
+  const phone = document.getElementById('order-phone').value.trim();
+  const address = document.getElementById('order-address').value.trim();
+  if (!name || !phone || !address) { showToast('⚠️ အချက်အလက် ဖြည့်ပါ', 'error'); return; }
+  // No screenshot required - payment details sent after order via WhatsApp
+  const sub = cart.reduce((a,c) => a + c.price*c.qty, 0);
+  const grand = sub + store.deliveryFee;
+  const orderNo = 'TTK-' + String(store.orderCounter).padStart(6, '0');
+  store.orderCounter++;
+  const order = {
+    id: orderNo, date: new Date().toLocaleString('my-MM'), name, phone, address,
+    note: document.getElementById('order-note').value,
+    payMethod, screenshot: screenshotData,
+    items: [...cart], subtotal: sub, deliveryFee: store.deliveryFee, total: grand,
+    status: 'pending'
+  };
+  store.orders.unshift(order);
+  saveStore();
+  closeOrderForm();
+  const c = document.getElementById('cart-sidebar');
+  c.classList.remove('open');
+  document.getElementById('cart-overlay').classList.remove('open');
+  showVoucher(order);
+  cart = [];
+  updateCartBadge();
+  screenshotData = '';
+  // WhatsApp notify
+  const payLabel = payMethod === 'bank' ? 'Bank Transfer' : payMethod === 'kpay' ? 'KPay' : 'Cash on Delivery';
+  const itemList = cart.map(c => `  - ${c.name} x${c.qty} = ${(c.price*c.qty).toFixed(0)} AED`).join('\n');
+  const msg = encodeURIComponent(`🛍️ TTK Order အသစ် - ${orderNo}\n\n👤 အမည်: ${name}\n📱 WhatsApp: ${phone}\n📍 လိပ်စာ: ${address}\n\n🧾 Items:\n${itemList}\n\n💰 စုစုပေါင်း: ${grand} AED\n💳 Payment: ${payLabel}\n\n⏳ Payment details ပေးပို့ပေးပါ`);
+  setTimeout(() => { window.open(`https://wa.me/971521885635?text=${msg}`, '_blank'); }, 500);
+}
+
+// ============ VOUCHER ============
+function showVoucher(order) {
+  document.getElementById('v-order-no').textContent = '#' + order.id;
+  document.getElementById('v-date').textContent = order.date;
+  document.getElementById('v-name').textContent = order.name;
+  document.getElementById('v-phone').textContent = order.phone;
+  document.getElementById('v-address').textContent = order.address;
+  document.getElementById('v-payment').textContent = order.payMethod === 'bank' ? 'Bank Transfer' : order.payMethod === 'kpay' ? 'KPay' : 'Cash';
+  document.getElementById('v-items').innerHTML = order.items.map(i =>
+    `<div class="voucher-item-row"><span>${i.name} x${i.qty}</span><span>${(i.price*i.qty).toFixed(0)} AED</span></div>`
+  ).join('');
+  document.getElementById('v-total').textContent = order.total.toFixed(0) + ' AED';
+  document.getElementById('voucher-overlay').classList.add('open');
+}
+function closeVoucher() {
+  document.getElementById('voucher-overlay').classList.remove('open');
+}
+
+// ============ ADMIN ============
+let adminLoggedIn = false;
+
+function openAdminTrigger() {
+  document.getElementById('login-screen').classList.add('show');
+}
+function closeLogin() {
+  document.getElementById('login-screen').classList.remove('show');
+}
+function doLogin() {
+  const user = document.getElementById('login-user').value;
+  const pass = document.getElementById('login-pass').value;
+  if ((user === 'MyoLin' || user === '@MyoLin') && pass === store.adminPassword) {
+    adminLoggedIn = true;
+    closeLogin();
+    openAdmin();
+  } else {
+    document.getElementById('login-error').style.display = 'block';
+  }
+}
+function openAdmin() {
+  document.getElementById('admin-overlay').classList.add('open');
+  renderAdminOrders();
+  renderAdminMenu();
+  renderAdminGallery();
+}
+function closeAdmin() {
+  document.getElementById('admin-overlay').classList.remove('open');
+}
+function switchAdminTab(tab, el) {
+  document.querySelectorAll('.admin-tab').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.admin-section').forEach(s => s.classList.remove('active'));
+  el.classList.add('active');
+  document.getElementById('admin-' + tab).classList.add('active');
+}
+function renderAdminOrders() {
+  const el = document.getElementById('admin-order-list');
+  if (!store.orders.length) { el.innerHTML = '<p style="color:var(--muted);text-align:center;padding:20px;">Orders မရှိသေးပါ</p>'; return; }
+  el.innerHTML = store.orders.map(o => `
+    <div class="order-row">
+      <div class="order-row-header">
+        <span class="order-no">#${o.id}</span>
+        <select class="status-badge status-${o.status}" onchange="updateOrderStatus('${o.id}', this.value)" style="border:none;cursor:pointer;font-size:0.75rem;font-weight:600;border-radius:20px;padding:4px 10px;">
+          <option value="pending" ${o.status==='pending'?'selected':''}>⏳ Pending</option>
+          <option value="confirmed" ${o.status==='confirmed'?'selected':''}>✓ Confirmed</option>
+          <option value="delivered" ${o.status==='delivered'?'selected':''}>🚚 Delivered</option>
+          <option value="cancelled" ${o.status==='cancelled'?'selected':''}>✕ Cancelled</option>
+        </select>
+      </div>
+      <div class="order-details">
+        📅 ${o.date}<br>
+        👤 ${o.name} | 📱 ${o.phone}<br>
+        📍 ${o.address}<br>
+        🍽️ ${o.items.map(i=>i.name+'x'+i.qty).join(', ')}<br>
+        💰 ${o.total} AED | 💳 ${o.payMethod}
+        ${o.screenshot ? `<br><a href="${o.screenshot}" target="_blank" style="color:var(--gold);">📸 Screenshot ကြည့်မည်</a>` : ''}
+      </div>
+      <div style="margin-top:8px;display:flex;gap:6px;">
+        <button class="admin-btn admin-btn-gold admin-btn-sm" onclick="showVoucher(store.orders.find(x=>x.id==='${o.id}'))">🧾 Voucher</button>
+        <button class="admin-btn admin-btn-danger admin-btn-sm" onclick="deleteOrder('${o.id}')">🗑️</button>
+      </div>
+    </div>
+  `).join('');
+}
+function updateOrderStatus(id, status) {
+  const o = store.orders.find(x => x.id === id);
+  if (o) { o.status = status; saveStore(); showToast('Status ပြောင်းပြီး', 'success'); }
+}
+function deleteOrder(id) {
+  store.orders = store.orders.filter(x => x.id !== id);
+  saveStore(); renderAdminOrders(); showToast('Order ဖျက်ပြီး');
+}
+function clearOrders() {
+  if (confirm('Orders အားလုံး ဖျက်မှာ သေချာပါသလား?')) {
+    store.orders = []; saveStore(); renderAdminOrders(); showToast('Orders ရှင်းပြီး');
+  }
+}
+
+// MENU ADMIN
+let newItemImgData = '';
+function previewMenuImg(input) {
+  const file = input.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = e => {
+    newItemImgData = e.target.result;
+    const preview = document.getElementById('new-item-img-preview');
+    preview.src = newItemImgData; preview.style.display = 'block';
+  };
+  reader.readAsDataURL(file);
+}
+function compressImage(base64, maxWidth, quality, callback) {
+  if (!base64) { callback(''); return; }
+  const img = new Image();
+  img.onload = function() {
+    const canvas = document.createElement('canvas');
+    let w = img.width, h = img.height;
+    if (w > maxWidth) { h = Math.round(h * maxWidth / w); w = maxWidth; }
+    canvas.width = w; canvas.height = h;
+    const ctx = canvas.getContext('2d');
+    ctx.drawImage(img, 0, 0, w, h);
+    callback(canvas.toDataURL('image/jpeg', quality));
+  };
+  img.onerror = function() { callback(base64); };
+  img.src = base64;
+}
+
+function addMenuItem() {
+  const name = document.getElementById('new-name').value.trim();
+  const cat = document.getElementById('new-cat').value.trim();
+  const price = parseFloat(document.getElementById('new-price').value);
+  const desc = document.getElementById('new-desc').value.trim();
+  if (!name || !cat || !price) { showToast('⚠️ Name, Category, Price ဖြည့်ပါ', 'error'); return; }
+  
+  const doAdd = (imgData) => {
+    const newItem = { id: Date.now().toString(), name, cat, price, desc, img: imgData };
+    store.menuItems.push(newItem);
+    saveStore();
+    newItemImgData = '';
+    document.getElementById('new-name').value = '';
+    document.getElementById('new-cat').value = '';
+    document.getElementById('new-price').value = '';
+    document.getElementById('new-desc').value = '';
+    document.getElementById('new-item-img-preview').style.display = 'none';
+    renderAdminMenu(); renderMenu();
+    showToast('✓ Item ထည့်ပြီး', 'success');
+  };
+  
+  if (newItemImgData) {
+    compressImage(newItemImgData, 600, 0.75, doAdd);
+  } else {
+    doAdd('');
+  }
+}
+function deleteMenuItem(id) {
+  store.menuItems = store.menuItems.filter(x => x.id !== id);
+  saveStore(); renderAdminMenu(); renderMenu();
+  showToast('Item ဖျက်ပြီး');
+}
+function renderAdminMenu() {
+  const el = document.getElementById('admin-menu-list');
+  if (!store.menuItems.length) { el.innerHTML = '<p style="color:var(--muted);padding:20px;text-align:center;">Menu Items မရှိသေးပါ</p>'; return; }
+  el.innerHTML = store.menuItems.map(i => `
+    <div class="menu-item-row">
+      ${i.img ? `<img src="${i.img}" alt="${i.name}">` : `<div style="width:50px;height:50px;background:var(--cream);border-radius:8px;display:flex;align-items:center;justify-content:center;">🍽️</div>`}
+      <div class="menu-item-info">
+        <strong>${i.name}</strong>
+        <span>${i.cat} | ${i.price} AED</span>
+      </div>
+      <div class="menu-item-actions">
+        <button class="admin-btn admin-btn-danger admin-btn-sm" onclick="deleteMenuItem('${i.id}')">🗑️</button>
+      </div>
+    </div>
+  `).join('');
+}
+
+// GALLERY ADMIN
+function addGalleryImages(input) {
+  const files = Array.from(input.files);
+  let processed = 0;
+  if (!files.length) return;
+  files.forEach(file => {
+    const reader = new FileReader();
+    reader.onload = e => {
+      compressImage(e.target.result, 800, 0.8, (compressed) => {
+        store.gallery.push({ id: Date.now().toString() + Math.random(), src: compressed });
+        processed++;
+        if (processed === files.length) {
+          saveStore(); renderAdminGallery(); renderGallery();
+          showToast('✓ ဓာတ်ပုံ ' + files.length + ' ခု ထည့်ပြီး', 'success');
+        }
+      });
+    };
+    reader.readAsDataURL(file);
+  });
+}
+function deleteGalleryImg(id) {
+  store.gallery = store.gallery.filter(x => x.id !== id);
+  saveStore(); renderAdminGallery(); renderGallery();
+  showToast('ဓာတ်ပုံ ဖျက်ပြီး');
+}
+function renderAdminGallery() {
+  const el = document.getElementById('admin-gallery-grid');
+  if (!store.gallery.length) { el.innerHTML = '<p style="color:var(--muted);">ဓာတ်ပုံ မရှိသေးပါ</p>'; return; }
+  el.innerHTML = store.gallery.map(g => `
+    <div class="gallery-admin-item">
+      <img src="${g.src}" alt="">
+      <button class="gallery-del-btn" onclick="deleteGalleryImg('${g.id}')">✕</button>
+    </div>
+  `).join('');
+}
+
+// TEXT SAVE
+function saveTexts() {
+  store.shopName = document.getElementById('txt-shopname').value;
+  store.heroDesc = document.getElementById('txt-herodesc').value;
+  store.about = document.getElementById('txt-about').value;
+  store.address = document.getElementById('txt-address').value;
+  store.phone = document.getElementById('txt-phone').value;
+  store.whatsapp = document.getElementById('txt-whatsapp').value;
+  store.navMenu = document.getElementById('txt-nav-menu').value;
+  store.navGallery = document.getElementById('txt-nav-gallery').value;
+  store.navAbout = document.getElementById('txt-nav-about').value;
+  store.navFindus = document.getElementById('txt-nav-findus').value;
+  const _tnp = document.getElementById('txt-nav-payment'); if(_tnp) store.navPayment = _tnp.value;
+  store.navCart = document.getElementById('txt-nav-cart').value;
+  store.heroBtn1 = document.getElementById('txt-hero-btn1').value;
+  store.heroBtn2 = document.getElementById('txt-hero-btn2').value;
+  store.secMenu = document.getElementById('txt-sec-menu').value;
+  store.secGallery = document.getElementById('txt-sec-gallery').value;
+  store.secAbout = document.getElementById('txt-sec-about').value;
+  store.secFindus = document.getElementById('txt-sec-findus').value;
+  const _tsp = document.getElementById('txt-sec-payment'); if(_tsp) store.secPayment = _tsp.value;
+  saveStore(); applyTexts();
+  showToast('✓ သိမ်းပြီးပါပြီ', 'success');
+}
+function applyTexts() {
+  document.getElementById('nav-shop-name').textContent = store.shopName;
+  document.getElementById('hero-title').textContent = store.shopName;
+  document.getElementById('hero-desc').textContent = store.heroDesc;
+  document.getElementById('about-text').textContent = store.about;
+  document.getElementById('address-text').textContent = store.address;
+  document.getElementById('phone-link').textContent = store.phone;
+  document.getElementById('phone-link').href = 'tel:' + store.phone;
+  document.getElementById('whatsapp-link').textContent = store.whatsapp;
+  document.getElementById('whatsapp-link').href = 'https://wa.me/' + store.whatsapp.replace(/\D/g,'');
+  document.querySelector('.whatsapp-fab').href = 'https://wa.me/' + store.whatsapp.replace(/\D/g,'');
+  // Nav links
+  document.getElementById('nav-menu').textContent = store.navMenu || 'မီနူး';
+  const _mn = document.getElementById('mob-nav-menu'); if(_mn) _mn.textContent = store.navMenu || 'မီနူး';
+  const _mg = document.getElementById('mob-nav-gallery'); if(_mg) _mg.textContent = store.navGallery || 'ဓာတ်ပုံ';
+  const _ma = document.getElementById('mob-nav-about'); if(_ma) _ma.textContent = store.navAbout || 'အကြောင်း';
+  const _mf = document.getElementById('mob-nav-findus'); if(_mf) _mf.textContent = store.navFindus || 'ဆက်သွယ်';
+  document.getElementById('nav-gallery').textContent = store.navGallery || 'ဓာတ်ပုံ';
+  document.getElementById('nav-about').textContent = store.navAbout || 'အကြောင်း';
+  document.getElementById('nav-findus').textContent = store.navFindus || 'ဆက်သွယ်';
+  const _np = document.getElementById('nav-payment'); if(_np) _np.textContent = store.navPayment || 'ငွေပေးချေ';
+  document.getElementById('nav-cart-text').textContent = store.navCart || '🛒 စလင်း';
+  // Hero buttons
+  document.getElementById('hero-btn1').textContent = store.heroBtn1 || 'မီနူးကြည့်မည်';
+  document.getElementById('hero-btn2').textContent = store.heroBtn2 || 'ဆက်သွယ်မည်';
+  // Section titles
+  document.getElementById('menu-section-title').textContent = store.secMenu || 'မီနူးစာရင်း';
+  document.getElementById('gallery-section-title').textContent = store.secGallery || 'ဓာတ်ပုံများ';
+  document.getElementById('about-section-title').textContent = store.secAbout || 'ကျွန်ုပ်တို့အကြောင်း';
+  document.getElementById('findus-section-title').textContent = store.secFindus || 'ဆက်သွယ်ရန်';
+  const _pst = document.getElementById('payment-section-title'); if(_pst) _pst.textContent = store.secPayment || 'ငွေပေးချေနည်း';
+  if (store.logo) {
+    document.getElementById('nav-logo-img').src = store.logo;
+    document.getElementById('nav-logo-img').style.display = 'block';
+    document.getElementById('hero-logo').src = store.logo;
+    document.getElementById('hero-logo').style.display = 'block';
+  }
+  // update admin inputs
+  document.getElementById('txt-shopname').value = store.shopName;
+  document.getElementById('txt-herodesc').value = store.heroDesc;
+  document.getElementById('txt-about').value = store.about;
+  document.getElementById('txt-address').value = store.address;
+  document.getElementById('txt-phone').value = store.phone;
+  document.getElementById('txt-whatsapp').value = store.whatsapp;
+  document.getElementById('txt-nav-menu').value = store.navMenu || 'မီနူး';
+  document.getElementById('txt-nav-gallery').value = store.navGallery || 'ဓာတ်ပုံ';
+  document.getElementById('txt-nav-about').value = store.navAbout || 'အကြောင်း';
+  document.getElementById('txt-nav-findus').value = store.navFindus || 'ဆက်သွယ်';
+  const _lnp = document.getElementById('txt-nav-payment'); if(_lnp) _lnp.value = store.navPayment || 'ငွေပေးချေ';
+  document.getElementById('txt-nav-cart').value = store.navCart || '🛒 စလင်း';
+  document.getElementById('txt-hero-btn1').value = store.heroBtn1 || 'မီနူးကြည့်မည်';
+  document.getElementById('txt-hero-btn2').value = store.heroBtn2 || 'ဆက်သွယ်မည်';
+  document.getElementById('txt-sec-menu').value = store.secMenu || 'မီနူးစာရင်း';
+  document.getElementById('txt-sec-gallery').value = store.secGallery || 'ဓာတ်ပုံများ';
+  document.getElementById('txt-sec-about').value = store.secAbout || 'ကျွန်ုပ်တို့အကြောင်း';
+  document.getElementById('txt-sec-findus').value = store.secFindus || 'ဆက်သွယ်ရန်';
+  const _lsp = document.getElementById('txt-sec-payment'); if(_lsp) _lsp.value = store.secPayment || 'ငွေပေးချေနည်း';
+}
+function uploadLogo(input) {
+  const file = input.files[0]; if (!file) return;
+  const reader = new FileReader();
+  reader.onload = e => { store.logo = e.target.result; saveStore(); applyTexts(); showToast('✓ Logo ထည့်ပြီး', 'success'); };
+  reader.readAsDataURL(file);
+}
+function changePassword() {
+  const np = document.getElementById('new-password').value;
+  if (!np || np.length < 4) { showToast('⚠️ Password အနည်းဆုံး 4 လုံး', 'error'); return; }
+  store.adminPassword = np;
+  saveStore();
+  document.getElementById('new-password').value = '';
+  showToast('✓ Password ပြောင်းပြီး', 'success');
+}
+
+// ============ RENDER PUBLIC ============
+function renderMenu() {
+  const cats = [...new Set(store.menuItems.map(i => i.cat))];
+  const catEl = document.getElementById('menu-cats');
+  const gridEl = document.getElementById('menu-grid');
+  if (!store.menuItems.length) {
+    catEl.innerHTML = '';
+    gridEl.innerHTML = '<p style="text-align:center;color:var(--muted);padding:40px;">မီနူး မရှိသေးပါ</p>';
+    return;
+  }
+  catEl.innerHTML = `<button class="cat-btn active" onclick="filterMenu('all',this)">အားလုံး</button>` +
+    cats.map(c => `<button class="cat-btn" onclick="filterMenu('${c}',this)">${c}</button>`).join('');
+  filterMenu('all');
+}
+function filterMenu(cat, btn) {
+  if (btn) {
+    document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+  }
+  const items = cat === 'all' ? store.menuItems : store.menuItems.filter(i => i.cat === cat);
+  document.getElementById('menu-grid').innerHTML = items.map(i => `
+    <div class="menu-card">
+      ${i.img ? `<img src="${i.img}" alt="${i.name}" onclick="openLightbox(this.src)" style="cursor:zoom-in">` : `<div style="height:160px;background:linear-gradient(135deg,#f5f0e8,#e8ddd0);display:flex;align-items:center;justify-content:center;font-size:3rem;">🍽️</div>`}
+      <div class="menu-card-body">
+        <h3>${i.name}</h3>
+        <p>${i.desc || ''}</p>
+        <div class="menu-card-footer">
+          <span class="price">${i.price} AED</span>
+          <button class="add-btn" onclick="addToCart('${i.id}')">+</button>
+        </div>
+      </div>
+    </div>
+  `).join('');
+}
+function renderGallery() {
+  const el = document.getElementById('gallery-grid');
+  if (!store.gallery.length) { el.innerHTML = '<p style="text-align:center;color:var(--muted);padding:40px;grid-column:1/-1;">ဓာတ်ပုံ မရှိသေးပါ</p>'; return; }
+  el.innerHTML = store.gallery.map(g => `<img src="${g.src}" class="gallery-img" alt="" onclick="openLightbox(this.src)">`).join('');
+}
+
+
+// ===== MOBILE MENU =====
+function toggleMobileMenu() {
+  const menu = document.getElementById('nav-mobile-menu');
+  menu.classList.toggle('open');
+}
+function closeMobileMenu() {
+  document.getElementById('nav-mobile-menu').classList.remove('open');
+}
+// Close mobile menu when clicking outside
+document.addEventListener('click', function(e) {
+  const menu = document.getElementById('nav-mobile-menu');
+  const btn = document.getElementById('hamburger-btn');
+  if (menu && btn && !menu.contains(e.target) && !btn.contains(e.target)) {
+    menu.classList.remove('open');
+  }
+});
+
+// ============ LIGHTBOX ============
+function openLightbox(src) {
+  document.getElementById('lightbox-img').src = src;
+  document.getElementById('lightbox-overlay').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+function closeLightbox() {
+  document.getElementById('lightbox-overlay').classList.remove('open');
+  document.getElementById('lightbox-img').src = '';
+  document.body.style.overflow = '';
+}
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLightbox(); });
+
+// ============ UTILS ============
+function copyText(text) {
+  navigator.clipboard.writeText(text).then(() => showToast('✓ Copy ပြီးပါပြီ', 'success'));
+}
+function showToast(msg, type = '') {
+  const t = document.getElementById('toast');
+  t.textContent = msg; t.className = 'toast' + (type ? ' ' + type : '') + ' show';
+  setTimeout(() => t.classList.remove('show'), 2500);
+}
+
+// Enter key login
+document.getElementById('login-pass').addEventListener('keydown', e => { if (e.key === 'Enter') doLogin(); });
+
+// ============ THEME ============
+const THEMES = {
+  gold:    { accent: '#C9A84C', dark: '#1a1a1a', bg: '#FAF7F2', heroBg: 'linear-gradient(135deg,#1a1a1a 0%,#2c1810 50%,#1a0f08 100%)' },
+  emerald: { accent: '#2ECC71', dark: '#1a3a2a', bg: '#F2FAF5', heroBg: 'linear-gradient(135deg,#1a3a2a 0%,#0d2d1e 50%,#061a10 100%)' },
+  ruby:    { accent: '#E74C3C', dark: '#3a1a1a', bg: '#FAF2F2', heroBg: 'linear-gradient(135deg,#3a1a1a 0%,#2d0d0d 50%,#1a0505 100%)' },
+  ocean:   { accent: '#3498DB', dark: '#1a2a3a', bg: '#F2F7FA', heroBg: 'linear-gradient(135deg,#1a2a3a 0%,#0d1d2d 50%,#050f1a 100%)' },
+  rose:    { accent: '#E91E8C', dark: '#3a1a2a', bg: '#FAF2F7', heroBg: 'linear-gradient(135deg,#3a1a2a 0%,#2d0d1e 50%,#1a050f 100%)' },
+  purple:  { accent: '#9B59B6', dark: '#2a1a3a', bg: '#F7F2FA', heroBg: 'linear-gradient(135deg,#2a1a3a 0%,#1d0d2d 50%,#0f051a 100%)' },
+};
+window._THEMES = THEMES;
+function applyTheme(name) {
+  const t = THEMES[name];
+  if (!t) return;
+  store.theme = name;
+  store.themeAccent = t.accent; store.themeDark = t.dark; store.themeBg = t.bg;
+  store.themeText = '#2c2c2c'; store.themeTitle = t.dark; store.themeMuted = '#888888';
+  saveStore();
+  applyThemeColors(t.accent, t.dark, t.bg, t.heroBg, store.themeText, store.themeTitle, store.themeMuted);
+  showToast('✓ Theme ပြောင်းပြီး', 'success');
+}
+function applyCustomTheme() {
+  const accent = document.getElementById('custom-accent-hex').value || document.getElementById('custom-accent').value;
+  const dark = document.getElementById('custom-dark-hex').value || document.getElementById('custom-dark').value;
+  const bg = document.getElementById('custom-bg-hex').value || document.getElementById('custom-bg').value;
+  const text = document.getElementById('custom-text-hex').value || document.getElementById('custom-text').value;
+  const title = document.getElementById('custom-title-hex').value || document.getElementById('custom-title').value;
+  const muted = document.getElementById('custom-muted-hex').value || document.getElementById('custom-muted').value;
+  store.theme = 'custom';
+  store.themeAccent = accent; store.themeDark = dark; store.themeBg = bg;
+  store.themeText = text; store.themeTitle = title; store.themeMuted = muted;
+  saveStore();
+  const heroBg = `linear-gradient(135deg,${dark} 0%,${dark}cc 50%,${dark}aa 100%)`;
+  applyThemeColors(accent, dark, bg, heroBg, text, title, muted);
+  showToast('✓ Custom Theme သုံးပြီး', 'success');
+}
+function applyThemeColors(accent, dark, bg, heroBg, text, title, muted) {
+  const root = document.documentElement;
+  root.style.setProperty('--gold', accent);
+  root.style.setProperty('--dark', dark);
+  root.style.setProperty('--cream', bg);
+  if (text) root.style.setProperty('--text', text);
+  if (title) root.style.setProperty('--title', title);
+  if (muted) root.style.setProperty('--muted', muted);
+  // Apply title color to section titles & headings
+  if (title) {
+    document.querySelectorAll('.section-title').forEach(el => el.style.color = title);
+    document.querySelectorAll('h3').forEach(el => el.style.color = title);
+  }
+  if (text) document.body.style.color = text;
+  const hero = document.querySelector('.hero');
+  if (hero) hero.style.background = heroBg;
+  // sync pickers
+  const pairs = [
+    ['custom-accent','custom-accent-hex',accent],
+    ['custom-dark','custom-dark-hex',dark],
+    ['custom-bg','custom-bg-hex',bg],
+    ['custom-text','custom-text-hex',text||'#2c2c2c'],
+    ['custom-title','custom-title-hex',title||'#1a1a1a'],
+    ['custom-muted','custom-muted-hex',muted||'#888888'],
+  ];
+  pairs.forEach(([pickerId, hexId, val]) => {
+    const picker = document.getElementById(pickerId);
+    const hex = document.getElementById(hexId);
+    if (picker && val) picker.value = val;
+    if (hex && val) hex.value = val;
+  });
+}
+function loadTheme() {
+  if (store.theme && store.themeAccent) {
+    const t = THEMES[store.theme] || {};
+    const heroBg = t.heroBg || `linear-gradient(135deg,${store.themeDark} 0%,${store.themeDark}cc 50%,${store.themeDark}aa 100%)`;
+    applyThemeColors(store.themeAccent, store.themeDark, store.themeBg, heroBg, store.themeText, store.themeTitle, store.themeMuted);
+  }
+  // bind all color picker → hex sync
+  const pairs = [
+    ['custom-accent','custom-accent-hex'],
+    ['custom-dark','custom-dark-hex'],
+    ['custom-bg','custom-bg-hex'],
+    ['custom-text','custom-text-hex'],
+    ['custom-title','custom-title-hex'],
+    ['custom-muted','custom-muted-hex'],
+  ];
+  pairs.forEach(([pickerId, hexId]) => {
+    const picker = document.getElementById(pickerId);
+    const hex = document.getElementById(hexId);
+    if (picker && hex) {
+      picker.addEventListener('input', e => hex.value = e.target.value);
+      hex.addEventListener('input', e => picker.value = e.target.value);
+    }
+  });
+}
+
+// ============ INIT ============
+loadStore();
+applyTexts();
+renderMenu();
+renderGallery();
+loadTheme();
+</script>
+</body>
+</html>
